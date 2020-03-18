@@ -10,4 +10,5 @@ module.exports = {
       },
     ],
   },
+  entry: "./src/app/app.jsx",
 };
