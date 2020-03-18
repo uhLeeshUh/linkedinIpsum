@@ -1,0 +1,12 @@
+{
+  "name": "linkedinIpsum",
+  "version": "1.0.0",
+  "description": "Professional Madlibs for your LinkedIn profile",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Alicia Underhill",
+  "license": "ISC"
+}
