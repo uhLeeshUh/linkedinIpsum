@@ -5,7 +5,7 @@ const App = () => {
   return <div>Hellow Werld</div>;
 };
 
-export default App;
-
-const rootEl = document.getElementById("root");
-ReactDOM.render(App, rootEl);
+document.addEventListener("DOMContentLoaded", () => {
+  const rootEl = document.getElementById("root");
+  ReactDOM.render(<App />, rootEl);
+});
