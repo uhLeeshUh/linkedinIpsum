@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node -P tsconfig.json ./src/server",
-    "build": "webpack --config ./src/app/webpack.config.js --mode production"
+    "build-frontend": "webpack --config ./src/app/webpack.config.js --mode production",
+    "build-test": "npm run build-frontend && npm run start"
   },
   "keywords": [],
   "author": "Alicia Underhill",
