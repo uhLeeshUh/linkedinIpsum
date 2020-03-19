@@ -8,19 +8,19 @@ module.exports = {
     rules: [
       {
         exclude: /node_modules/,
+        test: /\.m?tsx?$/,
+        use: [
+          {
+            loader: "awesome-typescript-loader?module=es6",
+          },
+        ],
+      },
+      {
+        exclude: /node_modules/,
         test: /\.(js|jsx)$/,
         use: {
           loader: "babel-loader",
         },
-      },
-      {
-        exclude: /node_modules/,
-        test: /\.m?tsx?$/,
-        use: [
-          {
-            loader: "babel-loader",
-          },
-        ],
       },
     ],
   },
