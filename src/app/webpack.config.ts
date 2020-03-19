@@ -1,4 +1,4 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+import HtmlWebPackPlugin from "html-webpack-plugin";
 
 const isProduction = process.env.NODE_ENV === "production";
 
