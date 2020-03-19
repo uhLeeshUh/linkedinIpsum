@@ -28,6 +28,9 @@ module.exports = {
     extensions: [".js", ".ts", ".tsx"],
   },
   entry: "./src/app/index.tsx",
+  devServer: {
+    historyApiFallback: true,
+  },
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/server/index.html",
