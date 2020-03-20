@@ -1,0 +1,8 @@
+type Query {
+  industries: [Industry!]!
+}
+
+type Industry {
+  id: ID!
+  name: String!
+}
