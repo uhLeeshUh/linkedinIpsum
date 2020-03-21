@@ -14,7 +14,11 @@
     "noEmit": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "baseUrl": "./",
+    "paths": {
+      "schema": ["@types/schema.d.ts"]
+    }
   },
   "include": [
     "@types",
