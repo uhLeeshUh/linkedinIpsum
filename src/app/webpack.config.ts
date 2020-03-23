@@ -30,6 +30,11 @@ module.exports = {
           loader: "babel-loader",
         },
       },
+      {
+        exclude: /node_modules/,
+        test: /\.(graphql|gql)$/,
+        loader: "graphql-tag/loader",
+      },
     ],
   },
   resolve: {
@@ -39,6 +44,9 @@ module.exports = {
   devServer: {
     port: 3000,
     historyApiFallback: true, // https://stackoverflow.com/questions/26203725/how-to-allow-for-webpack-dev-server-to-allow-entry-points-from-react-router
+    proxy: {
+      "/graphql": "http://localhost:8080", // proxy graphql requests to dev backend server
+    },
   },
   plugins: [
     new CleanWebpackPlugin(),
