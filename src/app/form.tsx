@@ -1,19 +1,33 @@
 import { upperFirst } from "lodash";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
+import getIndustriesQuery from "./graphql/queries/get-industries.graphql";
 
-const Form = (props: any) => {
-  const { industries } = props;
+interface IIndustry {
+  id: string;
+  name: string;
+}
+
+interface IGraphqlProps {
+  loading: boolean;
+  data: { industries: IIndustry[] };
+}
+
+const Form = () => {
   const [name, setName] = useState("");
   const [industryId, setIndustryId] = useState("");
   const history = useHistory();
+  const { loading, error, data } = useQuery(getIndustriesQuery);
 
   const onSubmit = async () => {
     // make graphql request to create bio
   };
 
-  const renderIndustryOptions = industries
-    ? industries.map((industryOption: any) => (
+  if (loading) return null;
+
+  const industryOptionsHtml = data.industries
+    ? data.industries.map((industryOption: IIndustry) => (
         <option key={industryOption.id} value={industryOption.id}>
           {upperFirst(industryOption.name)}
         </option>
@@ -36,7 +50,7 @@ const Form = (props: any) => {
         <option value="default" disabled>
           Select an industry
         </option>
-        {renderIndustryOptions}
+        {industryOptionsHtml}
       </select>
       <button type="button" onClick={onSubmit}>
         Make my profile!

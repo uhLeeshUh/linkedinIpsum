@@ -1,0 +1,6 @@
+query getIndustries {
+  industries {
+    id
+    name
+  }
+}
