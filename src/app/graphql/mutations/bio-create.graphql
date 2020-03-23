@@ -1,0 +1,7 @@
+mutation bioCreate($industryId: ID!, $name: String!) {
+  bioCreate(input: { industryId: $industryId, name: $name }) {
+    id
+    name
+    bioText
+  }
+}

@@ -1,32 +1,59 @@
 import { upperFirst } from "lodash";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import getIndustriesQuery from "./graphql/queries/get-industries.graphql";
+import bioCreateMutation from "./graphql/mutations/bio-create.graphql";
+import { ApolloError } from "apollo-boost";
 
 interface IIndustry {
   id: string;
   name: string;
 }
 
-interface IGraphqlProps {
+interface IIndustriesResult {
   loading: boolean;
-  data: { industries: IIndustry[] };
+  error?: ApolloError;
+  data?: { industries: IIndustry[] };
+}
+
+interface IBioCreateResult {
+  data: {
+    bioCreate: {
+      id: string;
+      name: string;
+      bioText: string;
+    };
+  };
 }
 
 const Form = () => {
   const [name, setName] = useState("");
   const [industryId, setIndustryId] = useState("");
   const history = useHistory();
-  const { loading, error, data } = useQuery(getIndustriesQuery);
+  const { loading, error, data }: IIndustriesResult = useQuery(
+    getIndustriesQuery,
+  );
+  const [createBio] = useMutation(bioCreateMutation);
 
   const onSubmit = async () => {
-    // make graphql request to create bio
+    try {
+      const result = (await createBio({
+        variables: { industryId, name },
+      })) as IBioCreateResult;
+      console.log("RESULT!", result);
+
+      // if (result.data) {
+      //   history.push(`/bio/${result.data.bioCreate.id}`);
+      // }
+    } catch (err) {
+      console.error(`ERROR: ${err}`);
+    }
   };
 
   if (loading) return null;
 
-  const industryOptionsHtml = data.industries
+  const industryOptionsHtml = data
     ? data.industries.map((industryOption: IIndustry) => (
         <option key={industryOption.id} value={industryOption.id}>
           {upperFirst(industryOption.name)}

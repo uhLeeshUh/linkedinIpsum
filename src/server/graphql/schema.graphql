@@ -2,7 +2,22 @@ type Query {
   industries: [Industry!]!
 }
 
+type Mutation {
+  bioCreate(input: BioCreateInput!): Bio!
+}
+
 type Industry {
   id: ID!
+  name: String!
+}
+
+type Bio {
+  id: ID!
+  name: String!
+  bioText: String!
+}
+
+input BioCreateInput {
+  industryId: ID!
   name: String!
 }
