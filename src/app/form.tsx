@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import getIndustriesQuery from "./graphql/queries/get-industries.graphql";
 import bioCreateMutation from "./graphql/mutations/bio-create.graphql";
-import { ApolloError } from "apollo-boost";
 
 interface IIndustry {
   id: string;
@@ -12,9 +11,7 @@ interface IIndustry {
 }
 
 interface IIndustriesResult {
-  loading: boolean;
-  error?: ApolloError;
-  data?: { industries: IIndustry[] };
+  industries: IIndustry[];
 }
 
 interface IBioCreateResult {
@@ -31,7 +28,7 @@ const Form = () => {
   const [name, setName] = useState("");
   const [industryId, setIndustryId] = useState("");
   const history = useHistory();
-  const { loading, error, data }: IIndustriesResult = useQuery(
+  const { loading, error, data } = useQuery<IIndustriesResult>(
     getIndustriesQuery,
   );
   const [createBio] = useMutation(bioCreateMutation);
@@ -43,9 +40,9 @@ const Form = () => {
       })) as IBioCreateResult;
       console.log("RESULT!", result);
 
-      // if (result.data) {
-      //   history.push(`/bio/${result.data.bioCreate.id}`);
-      // }
+      if (result.data) {
+        history.push(`/bio/${result.data.bioCreate.id}`);
+      }
     } catch (err) {
       console.error(`ERROR: ${err}`);
     }

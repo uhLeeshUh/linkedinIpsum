@@ -1,6 +1,7 @@
 declare module "schema" {
   export interface IQuery {
     industries: IIndustry[];
+    bio: IBio;
   }
 
   export interface IMutation {

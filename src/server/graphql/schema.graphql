@@ -1,5 +1,6 @@
 type Query {
   industries: [Industry!]!
+  bio(bioId: ID!): Bio!
 }
 
 type Mutation {
