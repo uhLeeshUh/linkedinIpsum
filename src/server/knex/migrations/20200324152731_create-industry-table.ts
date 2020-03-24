@@ -5,7 +5,10 @@ export async function up(knex: Knex): Promise<any> {
     if (!exists) {
       return knex.schema.createTable("industry", table => {
         table.string("id").primary();
-        table.string("name").notNullable();
+        table
+          .string("name")
+          .notNullable()
+          .unique();
 
         // timestamps
         table.timestamp("createdAt").defaultTo(knex.raw("now()"));
