@@ -10,7 +10,11 @@
     "dev-backend": "NODE_ENV=development nodemon --exec 'ts-node -P tsconfig.json ./src/server'",
     "start": "npm run build-frontend && npm run build-backend",
     "build-frontend": "webpack --config ./src/app/webpack.config.ts --mode production",
-    "build-backend": "NODE_ENV=production ts-node -P tsconfig.json ./src/server"
+    "build-backend": "NODE_ENV=production ts-node -P tsconfig.json ./src/server",
+    "knex": "ts-node -P tsconfig.json node_modules/.bin/knex",
+    "migrate": "npm run knex -- migrate:latest --knexfile=src/server/knex/knexfile.ts",
+    "migrate:make": "npm run knex -- migrate:make --knexfile=src/server/knex/knexfile.ts",
+    "migrate:rollback": "npm run knex -- migrate:rollback --knexfile=src/server/knex/knexfile.ts"
   },
   "keywords": [],
   "author": "Alicia Underhill",
@@ -38,8 +42,10 @@
     "graphql-tag": "^2.10.3",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "knex": "^0.20.13",
     "lodash": "^4.17.15",
     "nodemon": "^2.0.2",
+    "pg": "^7.18.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
