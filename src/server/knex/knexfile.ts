@@ -19,6 +19,30 @@ const config: Record<string, any> = {
       min: 1,
     },
   },
+  test: {
+    client: "pg",
+    connection: {
+      application_name: "linkedin test",
+      database: "linkedin_test",
+      host: "127.0.0.1",
+      timezone: "UTC",
+      user: "root",
+    },
+    migrations: {
+      directory: __dirname + "/migrations",
+      extension: "ts",
+    },
+    pool: {
+      acquireTimeoutMillis: 10000,
+      idleTimeoutMillis: 1000,
+      max: 2,
+      min: 1,
+    },
+    seeds: {
+      directory: __dirname + "/seeds",
+      extension: "ts",
+    },
+  },
 };
 
 export default config;
