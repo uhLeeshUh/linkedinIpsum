@@ -22,6 +22,34 @@ describe("Industry model", () => {
     await txn.rollback();
   });
 
+  describe("getAll", () => {
+    it("gets all industries", async () => {
+      const result = await Industry.getAll(txn);
+
+      expect(result).toHaveLength(4);
+      expect(result).toContainEqual(expect.objectContaining({ name: "tech" }));
+      expect(result).toContainEqual(
+        expect.objectContaining({ name: "consulting" }),
+      );
+      expect(result).toContainEqual(
+        expect.objectContaining({ name: "finance" }),
+      );
+      expect(result).toContainEqual(
+        expect.objectContaining({ name: "advertising" }),
+      );
+    });
+
+    it("does not return a deleted industry", async () => {
+      const techIndustry = await Industry.query(txn).findOne({ name: "tech" });
+      await techIndustry
+        .$query(txn)
+        .patchAndFetch({ deletedAt: new Date().toISOString() });
+      const result = await Industry.getAll(txn);
+
+      expect(result).toHaveLength(3);
+    });
+  });
+
   describe("create", () => {
     it("creates an industry", async () => {
       const allIndustries = await Industry.query(txn);

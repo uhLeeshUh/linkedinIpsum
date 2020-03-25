@@ -22,6 +22,10 @@ export default class Industry extends BaseModel {
     required: ["name"],
   };
 
+  static async getAll(txn: Transaction): Promise<Industry[]> {
+    return this.query(txn).whereNull("deletedAt");
+  }
+
   static async create(
     industry: IIndustryCreateFields,
     txn: Transaction,
