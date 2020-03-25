@@ -5,6 +5,7 @@ import schema from "./graphql/make-executable-schema";
 import knexConfig from "./knex/db";
 import Knex from "knex";
 import { Model } from "objection";
+import { getGraphQLContext } from "./graphql/helpers/graphql-utils";
 
 const app = express();
 
@@ -25,7 +26,11 @@ const knex = Knex(knexConfig);
 // wire up Objection to database connection
 Model.knex(knex);
 
-const server = new ApolloServer(schema);
+// wire up Graphql API
+const server = new ApolloServer({
+  ...schema,
+  context: getGraphQLContext,
+});
 server.applyMiddleware({ app });
 
 const PORT = process.env.PORT || 8080;
