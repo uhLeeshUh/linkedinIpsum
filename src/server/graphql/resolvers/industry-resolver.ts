@@ -1,14 +1,13 @@
 import { IIndustry } from "schema";
+import { IGraphQLContext } from "../helpers/graphql-utils";
+import Industry from "../../models/industry";
 
-export const resolveIndustries = (
+export const resolveIndustries = async (
   root: {},
   args: {},
-  context: {},
-): IIndustry[] => {
-  return [
-    { id: "123-finance", name: "finance" },
-    { id: "123-tech", name: "tech" },
-    { id: "123-advertising", name: "advertising" },
-    { id: "123-consulting", name: "consulting" },
-  ];
+  { getDatabaseTransaction, testTransaction }: IGraphQLContext,
+): Promise<IIndustry[]> => {
+  return getDatabaseTransaction(testTransaction, async txn => {
+    return Industry.getAll(txn);
+  });
 };
