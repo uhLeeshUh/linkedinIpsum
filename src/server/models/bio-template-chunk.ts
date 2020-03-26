@@ -64,7 +64,7 @@ export default class BioTemplateChunk extends BaseModel {
   ): Promise<BioTemplateChunk[]> {
     return this.query(txn)
       .withGraphFetched("[templateChunk, followingVariable]")
-      .where({ bioId })
+      .where({ bioId, "bio_template_chunk.deletedAt": null })
       .leftJoin("template_chunk as tc", builder =>
         builder.on("bio_template_chunk.templateChunkId", "=", "tc.id"),
       )
