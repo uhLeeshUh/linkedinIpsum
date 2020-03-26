@@ -30,7 +30,7 @@ interface ITemplateChunkWithVariableCategory extends ITemplateChunkBase {
   variables?: IVariable[];
 }
 
-interface ITemplateForCreation {
+export interface ITemplateForCreation {
   industries: IndustryType[];
   templateChunks: ITemplateChunk[];
 }
@@ -222,59 +222,3 @@ const createIndustryTemplates = async (
 };
 
 export default createTemplates;
-
-const testTemplate: ITemplateForCreation[] = [
-  {
-    industries: ["advertising"],
-    templateChunks: [
-      {
-        chunkText: "I am an ex-",
-        followingVariableCategoryName: "high_powered_corporate_professional",
-        variables: [
-          { variableText: "banker", isPreferred: true },
-          { variableText: "lawyer" },
-          { variableText: "management consultant" },
-          { variableText: "hedge fund manager" },
-        ],
-      },
-      {
-        chunkText: ", ex-",
-        followingVariableCategoryName: "exclusive_low_salary_professional",
-        variables: [
-          { variableText: "comic", isPreferred: true },
-          { variableText: "chef" },
-          { variableText: "writer" },
-          { variableText: "actor" },
-        ],
-      },
-      {
-        chunkText: ", ex-",
-        followingVariableCategoryName:
-          "self_describing_noun_you_have_grown_out_of",
-        variables: [
-          { variableText: "baby", isPreferred: true },
-          { variableText: "size 2" },
-        ],
-      },
-      {
-        chunkText: " turned creative marketer.",
-      },
-    ],
-  },
-  {
-    industries: ["advertising", "consulting", "finance"],
-    templateChunks: [
-      {
-        chunkText: "I don't just generate leads, I am a generational leader.",
-      },
-    ],
-  },
-  {
-    industries: ["advertising", "consulting", "finance", "tech"],
-    templateChunks: [
-      {
-        chunkText: "Dangerous when bored.",
-      },
-    ],
-  },
-];
