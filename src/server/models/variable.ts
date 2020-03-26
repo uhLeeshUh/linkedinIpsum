@@ -25,6 +25,31 @@ export default class Variable extends BaseModel {
     required: ["variableCategoryId", "variableText"],
   };
 
+  static async getById(
+    variableId: string,
+    txn: Transaction,
+  ): Promise<Variable> {
+    const fetchedVariable = await this.query(txn).findById(variableId);
+
+    if (!fetchedVariable) {
+      return Promise.reject(
+        `No variable exists in database for id ${variableId}`,
+      );
+    }
+
+    return fetchedVariable;
+  }
+
+  static async getRandomByCategoryId(
+    variableCategoryId: string,
+    txn: Transaction,
+  ): Promise<Variable> {
+    return this.query(txn)
+      .where({ variableCategoryId, deletedAt: null })
+      .orderByRaw("random()")
+      .first();
+  }
+
   static async create(
     variable: IVariableCreateFields,
     txn: Transaction,
