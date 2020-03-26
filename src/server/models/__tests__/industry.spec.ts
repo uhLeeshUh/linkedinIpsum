@@ -50,6 +50,20 @@ describe("Industry model", () => {
     });
   });
 
+  describe("getByName", () => {
+    it("gets an industry by name", async () => {
+      const result = await Industry.getByName("tech", txn);
+
+      expect(result!.name).toBe("tech");
+    });
+
+    it("returns undefined if the industry does not exist", async () => {
+      const result = await Industry.getByName("yer a wizard Harry", txn);
+
+      expect(result).toBeUndefined();
+    });
+  });
+
   describe("create", () => {
     it("creates an industry", async () => {
       const allIndustries = await Industry.query(txn);

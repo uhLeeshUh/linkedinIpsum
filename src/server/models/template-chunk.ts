@@ -1,7 +1,7 @@
 import BaseModel from "./base-model";
 import { JSONSchema, Transaction } from "objection";
 
-interface ITemplateChunkCreateFields {
+export interface ITemplateChunkCreateFields {
   index: number;
   chunkText: string;
   templateId: string;

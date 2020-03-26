@@ -26,6 +26,13 @@ export default class Industry extends BaseModel {
     return this.query(txn).whereNull("deletedAt");
   }
 
+  static async getByName(
+    name: string,
+    txn: Transaction,
+  ): Promise<Industry | undefined> {
+    return this.query(txn).findOne({ name });
+  }
+
   static async create(
     industry: IIndustryCreateFields,
     txn: Transaction,
