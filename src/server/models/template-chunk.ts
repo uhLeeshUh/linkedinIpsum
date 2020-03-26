@@ -40,4 +40,13 @@ export default class TemplateChunk extends BaseModel {
   ): Promise<TemplateChunk> {
     return this.query(txn).insertAndFetch(templateChunk);
   }
+
+  static async getAllForTemplate(
+    templateId: string,
+    txn: Transaction,
+  ): Promise<TemplateChunk[]> {
+    return this.query(txn)
+      .where({ templateId, deletedAt: null })
+      .orderBy("index", "ASC");
+  }
 }
