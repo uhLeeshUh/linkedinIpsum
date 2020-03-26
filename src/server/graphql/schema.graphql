@@ -15,10 +15,27 @@ type Industry {
 type Bio {
   id: ID!
   name: String!
-  bioText: String!
+  chunks: [BioChunk!]!
 }
 
 input BioCreateInput {
   industryId: ID!
   name: String!
+}
+
+type BioChunk {
+  id: ID! # same as TemplateChunk id
+  templateChunk: TemplateChunk!
+  followingVariable: Variable
+}
+
+type TemplateChunk {
+  id: ID!
+  index: Int!
+  chunkText: String!
+}
+
+type Variable {
+  id: ID!
+  variableText: String!
 }
