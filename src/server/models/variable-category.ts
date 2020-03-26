@@ -22,6 +22,13 @@ export default class VariableCategory extends BaseModel {
     required: ["categoryName"],
   };
 
+  static async getByName(
+    categoryName: string,
+    txn: Transaction,
+  ): Promise<VariableCategory | undefined> {
+    return this.query(txn).findOne({ categoryName });
+  }
+
   static async create(
     variableCategory: IVariableCategoryCreateFields,
     txn: Transaction,
