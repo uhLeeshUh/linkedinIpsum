@@ -18,11 +18,9 @@ const Bio = () => {
   return (
     <>
       <div>
-        BIO FOR: {data && data.bio ? data.bio.name : "Business Professional"}
+        <h2>{data && data.bio ? data.bio.name : "Business Professional"}</h2>
       </div>
-      <div>
-        BIO IS: {data && data.bio ? assembleBioText(data.bio) : "not defined"}
-      </div>
+      <div>{data && data.bio ? assembleBioText(data.bio) : "not defined"}</div>
     </>
   );
 };
