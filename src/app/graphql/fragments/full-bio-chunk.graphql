@@ -1,0 +1,12 @@
+#import "./full-template-chunk.graphql"
+#import "./full-variable.graphql"
+
+fragment FullBioChunk on BioChunk {
+  id
+  templateChunk {
+    ...FullTemplateChunk
+  }
+  followingVariable {
+    ...FullVariable
+  }
+}

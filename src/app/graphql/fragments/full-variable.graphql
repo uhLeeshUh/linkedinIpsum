@@ -1,0 +1,4 @@
+fragment FullVariable on Variable {
+  id
+  variableText
+}

@@ -1,0 +1,5 @@
+fragment FullTemplateChunk on TemplateChunk {
+  id
+  index
+  chunkText
+}

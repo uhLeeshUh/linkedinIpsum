@@ -1,7 +1,11 @@
+#import "../fragments/full-bio-chunk.graphql"
+
 query getBio($bioId: ID!) {
   bio(bioId: $bioId) {
     id
     name
-    bioText
+    bioChunks {
+      ...FullBioChunk
+    }
   }
 }
