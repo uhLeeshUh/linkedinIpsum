@@ -3,13 +3,15 @@ import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import path from "path";
 
 const isProduction = process.env.NODE_ENV === "production";
-const outputDir = "dist";
+const outputDir = "/dist/";
+const PORT = 3000;
 
 module.exports = {
   mode: isProduction ? "production" : "development",
   entry: "./src/app/index.tsx",
   output: {
-    path: path.join(__dirname, outputDir),
+    path: path.join(__dirname, outputDir), // path in project for server to find and send compiled static files
+    publicPath: "/", // used by HtmlWebPackPlugin to prepend bundle.js with an absolute path in browser
     filename: "bundle.js",
   },
   module: {
@@ -42,8 +44,9 @@ module.exports = {
   },
   devtool: isProduction ? false : "inline-source-map", // maps compiled code back to original source code
   devServer: {
-    port: 3000,
-    historyApiFallback: true, // https://stackoverflow.com/questions/26203725/how-to-allow-for-webpack-dev-server-to-allow-entry-points-from-react-router
+    port: PORT,
+    publicPath: "/", // webpack dev server will output its compiled files here, which matches the absolute output.publicPath above
+    historyApiFallback: true, //  https://stackoverflow.com/questions/26203725/how-to-allow-for-webpack-dev-server-to-allow-entry-points-from-react-router
     proxy: {
       "/graphql": "http://localhost:8080", // proxy graphql requests to dev backend server
     },
