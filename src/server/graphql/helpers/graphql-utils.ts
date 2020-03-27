@@ -24,7 +24,7 @@ export const getGraphQLContext = async ({ req, res }: IExpressArgs) => {
       if (testTransaction) {
         return cb(testTransaction);
       } else if (req) {
-        return cb(await transaction.start(Model.knex()));
+        return Model.transaction(cb);
       }
     } catch (err) {
       console.error(
