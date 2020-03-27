@@ -16,7 +16,7 @@ declare module "schema" {
   export interface IBio {
     id: string;
     name: string;
-    chunks: IBioChunk[];
+    bioChunks: IBioChunk[];
   }
 
   export interface IBioCreateInput {

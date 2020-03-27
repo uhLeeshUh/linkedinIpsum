@@ -15,7 +15,7 @@ type Industry {
 type Bio {
   id: ID!
   name: String!
-  chunks: [BioChunk!]!
+  bioChunks: [BioChunk!]!
 }
 
 input BioCreateInput {
