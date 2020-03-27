@@ -20,20 +20,18 @@ export const getGraphQLContext = async ({ req, res }: IExpressArgs) => {
     testTransaction: Transaction | undefined,
     cb: (txn: Transaction) => Promise<T>,
   ): Promise<T> => {
-    let callbackWithTransaction = transaction(Model.knex(), cb);
     try {
       if (testTransaction) {
-        callbackWithTransaction = cb(testTransaction);
+        return cb(testTransaction);
       } else if (req) {
-        const txn = transaction.start(Model.knex());
-        callbackWithTransaction = cb(await txn);
+        return cb(await transaction.start(Model.knex()));
       }
     } catch (err) {
       console.error(
         `ERROR Cannot get database txn for GraphQL context: ${err}`,
       );
     }
-    return callbackWithTransaction;
+    return transaction(Model.knex(), cb);
   };
 
   if (req) {
