@@ -4,43 +4,35 @@ import { IGraphQLContext } from "../helpers/graphql-utils";
 import Template from "../../models/template";
 import TemplateChunk from "../../models/template-chunk";
 import { createBioChunks } from "../helpers/bio-utils";
+import BioTemplateChunk from "../../models/bio-template-chunk";
+import { pick } from "lodash";
 
-// export const resolveBio = (
-//   root: {},
-//   args: { bioId: string },
-//   context: {},
-// ): IBio => {
-//   type BioIds =
-//     | "123-finance-bio-id"
-//     | "123-tech-bio-id"
-//     | "123-advertising-bio-id"
-//     | "123-consulting-bio-id";
+export const resolveBio = async (
+  root: {},
+  args: { bioId: string },
+  { getDatabaseTransaction, testTransaction }: IGraphQLContext,
+) => {
+  return getDatabaseTransaction(testTransaction, async txn => {
+    const resolvedBio = await Bio.getById(args.bioId, txn);
+    const bioTemplateChunks = await BioTemplateChunk.getAllForBio(
+      args.bioId,
+      txn,
+    );
+    const bioChunks = bioTemplateChunks.map(bioTemplateChunk => ({
+      id: bioTemplateChunk.templateChunk.id,
+      templateChunk: pick(bioTemplateChunk.templateChunk, [
+        "id",
+        "index",
+        "chunkText",
+      ]),
+      followingVariable: bioTemplateChunk.followingVariable
+        ? pick(bioTemplateChunk.followingVariable, ["id", "variableText"])
+        : null,
+    }));
 
-//   const bioMap: Record<BioIds, IBio> = {
-//     "123-finance-bio-id": {
-//       id: "123-finance-bio-id",
-//       name: "Test name",
-//       bioText: "finance bio here",
-//     },
-//     "123-tech-bio-id": {
-//       id: "123-tech-bio-id",
-//       name: "Test name",
-//       bioText: "tech bio here",
-//     },
-//     "123-advertising-bio-id": {
-//       id: "123-advertising-bio-id",
-//       name: "Test name",
-//       bioText: "advertising bio here",
-//     },
-//     "123-consulting-bio-id": {
-//       id: "123-consulting-bio-id",
-//       name: "Test name",
-//       bioText: "consulting bio here",
-//     },
-//   };
-
-//   return bioMap[args.bioId as BioIds];
-// };
+    return { id: resolvedBio.id, name: resolvedBio.name, bioChunks };
+  });
+};
 
 export const bioCreate = async (
   root: {},

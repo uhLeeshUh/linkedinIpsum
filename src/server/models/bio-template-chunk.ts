@@ -13,6 +13,8 @@ export default class BioTemplateChunk extends BaseModel {
   bioId!: string;
   templateChunkId!: string;
   followingVariableId!: string | null;
+  templateChunk!: TemplateChunk; // available with graph fetch
+  followingVariable!: Variable | null; // available with graph fetch
 
   static tableName = "bio_template_chunk";
 
