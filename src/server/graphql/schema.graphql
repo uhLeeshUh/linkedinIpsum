@@ -5,6 +5,7 @@ type Query {
 
 type Mutation {
   bioCreate(input: BioCreateInput!): Bio!
+  bioOptimize(input: BioOptimizeInput!): Bio!
 }
 
 type Industry {
@@ -20,6 +21,11 @@ type Bio {
 
 input BioCreateInput {
   industryId: ID!
+  name: String!
+}
+
+input BioOptimizeInput {
+  id: ID!
   name: String!
 }
 

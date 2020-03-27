@@ -6,6 +6,7 @@ declare module "schema" {
 
   export interface IMutation {
     bioCreate: IBio;
+    bioOptimize: IBio;
   }
 
   export interface IIndustry {
@@ -21,6 +22,11 @@ declare module "schema" {
 
   export interface IBioCreateInput {
     industryId: string;
+    name: string;
+  }
+
+  export interface IBioOptimizeInput {
+    id: string;
     name: string;
   }
 
