@@ -48,15 +48,13 @@ export const createBioChunks = async (
     // create a BioTemplateChunk
     await BioTemplateChunk.create(bioTemplateChunkArgs, txn);
 
-    BIO_CHUNKS.concat([
-      {
-        id: templateChunk.id,
-        templateChunk: pick(templateChunk, ["id", "index", "chunkText"]),
-        followingVariable: followingVariable
-          ? pick(followingVariable, ["id", "variableText"])
-          : null,
-      },
-    ]);
+    BIO_CHUNKS.push({
+      id: templateChunk.id,
+      templateChunk: pick(templateChunk, ["id", "index", "chunkText"]),
+      followingVariable: followingVariable
+        ? pick(followingVariable, ["id", "variableText"])
+        : null,
+    });
   }
   return BIO_CHUNKS;
 };

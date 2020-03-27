@@ -25,7 +25,7 @@ declare module "schema" {
   }
 
   export interface IBioChunk {
-    id: string;
+    id: string; // same as templateChunk id
     templateChunk: ITemplateChunk;
     followingVariable: IVariable | null;
   }
