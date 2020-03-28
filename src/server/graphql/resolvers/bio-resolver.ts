@@ -1,9 +1,12 @@
-import { IBioCreateInput } from "schema";
+import { IBioCreateInput, IBioOptimizeInput } from "schema";
 import Bio from "../../models/bio";
 import { IGraphQLContext } from "../helpers/graphql-utils";
 import Template from "../../models/template";
 import TemplateChunk from "../../models/template-chunk";
-import { createBioChunks } from "../helpers/bio-utils";
+import {
+  createBioChunks,
+  createOptimizedBioChunks,
+} from "../helpers/bio-utils";
 import BioTemplateChunk from "../../models/bio-template-chunk";
 import { pick } from "lodash";
 
@@ -63,14 +66,23 @@ export const bioCreate = async (
   });
 };
 
-// export const bioOptimize = async (){
-// create a BIO CHUNKS array that starts as empty
-// loop through those bio_template_chunks
-//  X    if followingVariableCategoryId, load a random Variable with that category where deletedAt = null THAT IS DIFFERENT FROM THE CURRENT ID, add that on to query builder optionally
-//      NOTE: should look up how to select randomly in SQL
-//      if there is no other variable than the one in the current bio, use the current one
-//  X    create a BioTemplateChunk entry with BIO id, TEMPLATE CHUNK id and possibly followingVariableId
-//  X    push into BIO CHUNKS array { id: template_chunk.id, TEMPLATE CHUNK (picked), potentially FOLLOWING VARIABLE (picked)}
-// return Bio graphql type
+export const bioOptimize = async (
+  root: {},
+  args: { input: IBioOptimizeInput },
+  { getDatabaseTransaction, testTransaction }: IGraphQLContext,
+) => {
+  return getDatabaseTransaction(testTransaction, async txn => {
+    const { id, name } = args.input;
 
-// }
+    const optimizedBio = await Bio.create({ name }, txn);
+
+    const oldBioTemplateChunks = await BioTemplateChunk.getAllForBio(id, txn);
+
+    const bioChunks = await createOptimizedBioChunks(
+      { oldBioTemplateChunks, optimizedBio },
+      txn,
+    );
+
+    return { id: optimizedBio.id, name: optimizedBio.name, bioChunks };
+  });
+};
