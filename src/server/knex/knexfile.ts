@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 const config: Record<string, any> = {
   ext: "ts",
   development: {
@@ -41,6 +44,28 @@ const config: Record<string, any> = {
     seeds: {
       directory: __dirname + "/seeds",
       extension: "ts",
+    },
+  },
+  production: {
+    client: "pg",
+    connection: {
+      application_name: "linkedin production",
+      database: "linkedin_production",
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      ssl: true,
+      timezone: "UTC",
+    },
+    migrations: {
+      directory: __dirname + "/migrations",
+    },
+    pool: {
+      acquireTimeoutMillis: 10000,
+      idleTimeoutMillis: 1000,
+      max: 50,
+      min: 1,
     },
   },
 };
