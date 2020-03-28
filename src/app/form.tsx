@@ -36,6 +36,7 @@ const Form = () => {
   if (loading) return null;
   if (error) {
     console.error(`Error loading industries: ${error}`);
+    return null;
   }
 
   const industryOptionsHtml = data

@@ -15,9 +15,10 @@ const Bio = () => {
   });
   const [optimizeBio] = useMutation<IBioOptimizeData>(bioOptimizeMutation);
 
-  if (loading) return null;
+  if (loading && !data) return null;
   if (error) {
     console.error(`Error loading bio: ${error}`);
+    return null;
   }
 
   const onClick = async () => {
@@ -74,10 +75,3 @@ const assembleBioText = (bio: IBio) => {
 };
 
 export default Bio;
-
-// useEffect(() => {
-//   if (isValidationCalled && step < 1) setStep(step + 1);
-//   if (inviteCalled && step < 2) setStep(step + 1);
-//   if (validateError) setError(true);
-//   if (inviteError) setError(true);
-// }, [isValidationCalled, inviteCalled, inviteError, validateError]);
