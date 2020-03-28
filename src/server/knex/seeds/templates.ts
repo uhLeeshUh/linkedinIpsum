@@ -80,4 +80,13 @@ const SEED_TEMPLATES: ITemplateForCreation[] = [
       },
     ],
   },
+  {
+    industries: ["consulting"],
+    templateChunks: [
+      {
+        chunkText:
+          "Recent college graduate in management consulting with 10+ years of experience.",
+      },
+    ],
+  },
 ];
