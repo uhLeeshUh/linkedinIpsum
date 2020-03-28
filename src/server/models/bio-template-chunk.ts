@@ -24,7 +24,7 @@ export default class BioTemplateChunk extends BaseModel {
       id: { type: "string", format: "uuid" },
       bioId: { type: "string", format: "uuid" },
       templateChunkId: { type: "string", format: "uuid" },
-      followingVariableId: { type: "string", format: "uuid" },
+      followingVariableId: { type: ["string", "null"], format: "uuid" },
       updatedAt: { type: "string" },
       createdAt: { type: "string" },
       deletedAt: { type: "string" },
