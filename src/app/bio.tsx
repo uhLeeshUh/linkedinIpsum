@@ -6,6 +6,7 @@ import bioOptimizeMutation from "./graphql/mutations/bio-optimize.graphql";
 import { IBioData, IBio, IBioOptimizeData } from "./graphql/graphql-types";
 import { find } from "lodash";
 import { useHistory } from "react-router-dom";
+import Variable from "./variable";
 
 const Bio = () => {
   const { bioId } = useParams();
@@ -63,15 +64,15 @@ const Bio = () => {
 };
 
 const assembleBioText = (bio: IBio) => {
-  let bioText = "";
+  const bioTextHtml: JSX.Element[] = [];
   bio.bioChunks.forEach(bioChunk => {
     const { templateChunk, followingVariable } = bioChunk;
-    bioText += templateChunk.chunkText;
+    bioTextHtml.push(<span>{templateChunk.chunkText}</span>);
     if (followingVariable) {
-      bioText += followingVariable.variableText;
+      bioTextHtml.push(<Variable variable={followingVariable} />);
     }
   });
-  return bioText;
+  return bioTextHtml;
 };
 
 export default Bio;
