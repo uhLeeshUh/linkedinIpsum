@@ -70,7 +70,7 @@ const Form = () => {
       <br />
       <br />
       <button type="button" onClick={onSubmit}>
-        Make my profile!
+        Make my bio!
       </button>
     </div>
   );
