@@ -48,16 +48,8 @@ const config: Record<string, any> = {
   },
   production: {
     client: "pg",
-    connection: {
-      application_name: "linkedin production",
-      database: "linkedin_production",
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      ssl: true,
-      timezone: "UTC",
-    },
+    connection: process.env.DATABASE_URL,
+    ssl: true,
     migrations: {
       directory: __dirname + "/migrations",
     },
