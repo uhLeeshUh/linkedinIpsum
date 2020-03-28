@@ -6,6 +6,11 @@ interface IVariableCreateFields {
   variableText: string;
 }
 
+interface IVariableRandomFields {
+  variableCategoryId: string;
+  excludedVariableId?: string; // used for optimizing a bio
+}
+
 export default class Variable extends BaseModel {
   variableCategoryId!: string;
   variableText!: string;
@@ -41,13 +46,19 @@ export default class Variable extends BaseModel {
   }
 
   static async getRandomByCategoryId(
-    variableCategoryId: string,
+    { variableCategoryId, excludedVariableId }: IVariableRandomFields,
     txn: Transaction,
-  ): Promise<Variable> {
-    return this.query(txn)
+  ): Promise<Variable | undefined> {
+    const queryBuilder = this.query(txn)
       .where({ variableCategoryId, deletedAt: null })
       .orderByRaw("random()")
       .first();
+
+    if (excludedVariableId) {
+      queryBuilder.whereNot({ id: excludedVariableId });
+    }
+
+    return queryBuilder;
   }
 
   static async create(

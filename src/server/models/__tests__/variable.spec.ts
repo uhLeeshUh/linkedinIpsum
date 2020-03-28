@@ -46,13 +46,50 @@ describe("Variable model", () => {
 
     it("gets an undeleted variable in given category", async () => {
       const result = await Variable.getRandomByCategoryId(
-        variableCategory.id,
+        { variableCategoryId: variableCategory.id },
         txn,
       );
 
       expect([variable0, variable1, variable2, variable3]).toContainEqual(
         expect.objectContaining(result),
       );
+    });
+
+    it("gets a different variable than the excluded one when excludedVariableId is passed", async () => {
+      const result = await Variable.getRandomByCategoryId(
+        {
+          variableCategoryId: variableCategory.id,
+          excludedVariableId: variable0.id,
+        },
+        txn,
+      );
+
+      expect(result!.id).not.toBe(variable0.id);
+      expect([variable1, variable2, variable3]).toContainEqual(
+        expect.objectContaining(result),
+      );
+    });
+
+    it("returns undefined when passed excludedVariableId and no other variable exists for the category", async () => {
+      await Variable.query(txn).patchAndFetchById(variable1.id, {
+        deletedAt: new Date().toISOString(),
+      });
+      await Variable.query(txn).patchAndFetchById(variable2.id, {
+        deletedAt: new Date().toISOString(),
+      });
+      await Variable.query(txn).patchAndFetchById(variable3.id, {
+        deletedAt: new Date().toISOString(),
+      });
+
+      const result = await Variable.getRandomByCategoryId(
+        {
+          variableCategoryId: variableCategory.id,
+          excludedVariableId: variable0.id,
+        },
+        txn,
+      );
+
+      expect(result).toBeUndefined();
     });
   });
 });
