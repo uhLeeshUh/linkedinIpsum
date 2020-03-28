@@ -1,19 +1,53 @@
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import React from "react";
 import { useParams } from "react-router-dom";
 import getBioQuery from "./graphql/queries/get-bio.graphql";
-import { IBioData, IBio } from "./graphql/graphql-types";
+import bioOptimizeMutation from "./graphql/mutations/bio-optimize.graphql";
+import { IBioData, IBio, IBioOptimizeData } from "./graphql/graphql-types";
+import { find } from "lodash";
+import { useHistory } from "react-router-dom";
 
 const Bio = () => {
   const { bioId } = useParams();
+  const history = useHistory();
   const { data, loading, error } = useQuery<IBioData>(getBioQuery, {
     variables: { bioId },
   });
+  const [optimizeBio] = useMutation<IBioOptimizeData>(bioOptimizeMutation);
 
   if (loading) return null;
   if (error) {
     console.error(`Error loading bio: ${error}`);
   }
+
+  const onClick = async () => {
+    if (data) {
+      try {
+        const result = await optimizeBio({
+          variables: { bioId, name: data.bio.name },
+        });
+
+        if (result.data) {
+          history.push(`/bio/${result.data.bioOptimize.id}`);
+        }
+      } catch (err) {
+        console.error(`ERROR optimizing bio: ${err}`);
+      }
+    }
+  };
+
+  const getOptimizeButtonHtml = () => {
+    let bioChunkWithVariable;
+    if (data) {
+      const {
+        bio: { bioChunks },
+      } = data;
+      bioChunkWithVariable = find(bioChunks, "followingVariable");
+    }
+    return bioChunkWithVariable ? (
+      <button onClick={onClick}>Optimize!</button>
+    ) : null;
+  };
 
   return (
     <>
@@ -21,6 +55,8 @@ const Bio = () => {
         <h2>{data && data.bio ? data.bio.name : "Business Professional"}</h2>
       </div>
       <div>{data && data.bio ? assembleBioText(data.bio) : "not defined"}</div>
+      <br />
+      {getOptimizeButtonHtml()}
     </>
   );
 };
@@ -38,3 +74,10 @@ const assembleBioText = (bio: IBio) => {
 };
 
 export default Bio;
+
+// useEffect(() => {
+//   if (isValidationCalled && step < 1) setStep(step + 1);
+//   if (inviteCalled && step < 2) setStep(step + 1);
+//   if (validateError) setError(true);
+//   if (inviteError) setError(true);
+// }, [isValidationCalled, inviteCalled, inviteError, validateError]);

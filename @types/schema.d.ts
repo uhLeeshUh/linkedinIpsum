@@ -26,7 +26,7 @@ declare module "schema" {
   }
 
   export interface IBioOptimizeInput {
-    id: string;
+    bioId: string;
     name: string;
   }
 

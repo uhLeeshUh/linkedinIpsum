@@ -11,6 +11,10 @@ export interface IBioCreateData {
   bioCreate: IBio;
 }
 
+export interface IBioOptimizeData {
+  bioOptimize: IBio;
+}
+
 export interface IBioData {
   bio: IBio;
 }

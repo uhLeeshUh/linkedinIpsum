@@ -72,11 +72,14 @@ export const bioOptimize = async (
   { getDatabaseTransaction, testTransaction }: IGraphQLContext,
 ) => {
   return getDatabaseTransaction(testTransaction, async txn => {
-    const { id, name } = args.input;
+    const { bioId, name } = args.input;
 
     const optimizedBio = await Bio.create({ name }, txn);
 
-    const oldBioTemplateChunks = await BioTemplateChunk.getAllForBio(id, txn);
+    const oldBioTemplateChunks = await BioTemplateChunk.getAllForBio(
+      bioId,
+      txn,
+    );
 
     const bioChunks = await createOptimizedBioChunks(
       { oldBioTemplateChunks, optimizedBio },

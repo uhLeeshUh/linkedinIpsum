@@ -29,7 +29,7 @@ const Form = () => {
         history.push(`/bio/${result.data.bioCreate.id}`);
       }
     } catch (err) {
-      console.error(`ERROR: ${err}`);
+      console.error(`ERROR creating bio: ${err}`);
     }
   };
 
@@ -48,12 +48,14 @@ const Form = () => {
 
   return (
     <div>
-      <div>What is your first name?</div>
+      <div>What is your name?</div>
       <input
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setName(e.currentTarget.value)
         }
       />
+      <br />
+      <br />
       <div>In what industry do you conduct business?</div>
       <select
         onChange={e => setIndustryId(e.currentTarget.value)}
@@ -64,6 +66,8 @@ const Form = () => {
         </option>
         {industryOptionsHtml}
       </select>
+      <br />
+      <br />
       <button type="button" onClick={onSubmit}>
         Make my profile!
       </button>
