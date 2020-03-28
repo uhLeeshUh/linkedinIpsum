@@ -22,7 +22,7 @@ const Bio = () => {
     return null;
   }
 
-  const onClick = async () => {
+  const onClickOptimize = async () => {
     if (data) {
       try {
         const result = await optimizeBio({
@@ -38,6 +38,10 @@ const Bio = () => {
     }
   };
 
+  const onClickCreateNewBio = () => {
+    history.push("/form");
+  };
+
   const getOptimizeButtonHtml = () => {
     let bioChunkWithVariable;
     if (data) {
@@ -47,7 +51,7 @@ const Bio = () => {
       bioChunkWithVariable = find(bioChunks, "followingVariable");
     }
     return bioChunkWithVariable ? (
-      <button onClick={onClick}>Optimize!</button>
+      <button onClick={onClickOptimize}>Optimize my bio!</button>
     ) : null;
   };
 
@@ -59,6 +63,9 @@ const Bio = () => {
       <div>{data && data.bio ? assembleBioText(data.bio) : "not defined"}</div>
       <br />
       {getOptimizeButtonHtml()}
+      <br />
+      <br />
+      <button onClick={onClickCreateNewBio}>Make a new bio</button>
     </>
   );
 };
