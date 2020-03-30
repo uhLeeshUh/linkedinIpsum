@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import getBioQuery from "./graphql/queries/get-bio.graphql";
 import bioOptimizeMutation from "./graphql/mutations/bio-optimize.graphql";
 import { IBioData, IBio, IBioOptimizeData } from "./graphql/graphql-types";
-import { find } from "lodash";
+import find from "lodash/find";
 import { useHistory } from "react-router-dom";
 import Variable from "./variable";
 

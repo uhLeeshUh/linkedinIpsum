@@ -6,7 +6,7 @@ import BioTemplateChunk, {
 import Bio from "../../models/bio";
 import Variable from "../../models/variable";
 import { IBioChunk } from "schema";
-import { pick } from "lodash";
+import pick from "lodash/pick";
 
 interface ICreateBioChunksArgs {
   templateChunksForTemplate: TemplateChunk[];

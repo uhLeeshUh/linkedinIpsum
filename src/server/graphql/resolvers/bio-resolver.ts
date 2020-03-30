@@ -8,7 +8,7 @@ import {
   createOptimizedBioChunks,
 } from "../helpers/bio-utils";
 import BioTemplateChunk from "../../models/bio-template-chunk";
-import { pick } from "lodash";
+import pick from "lodash/pick";
 
 export const resolveBio = async (
   root: {},

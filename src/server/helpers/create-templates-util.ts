@@ -1,6 +1,6 @@
 import { Transaction } from "objection";
 import Template from "../models/template";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import Industry from "../models/industry";
 import IndustryTemplate from "../models/industry-template";
 import TemplateChunk, {

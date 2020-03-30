@@ -1,6 +1,6 @@
 import express from "express";
 import { Transaction, transaction, Model } from "objection";
-import { isArray } from "lodash";
+import isArray from "lodash/isArray";
 
 interface IExpressArgs {
   req: express.Request;

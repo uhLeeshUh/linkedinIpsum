@@ -1,4 +1,4 @@
-import { upperFirst } from "lodash";
+import upperFirst from "lodash/upperFirst";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
