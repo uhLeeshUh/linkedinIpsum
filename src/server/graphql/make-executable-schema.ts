@@ -1,7 +1,6 @@
-import "graphql-import-node";
 import { resolveIndustries } from "./resolvers/industry-resolver";
 import { bioCreate, resolveBio, bioOptimize } from "./resolvers/bio-resolver";
-import typeDefs from "./schema.graphql";
+import typeDefs from "./schema";
 
 const resolvers = {
   Query: {
