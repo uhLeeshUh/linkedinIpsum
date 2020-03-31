@@ -3,14 +3,13 @@ import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import path from "path";
 
 const isProduction = process.env.NODE_ENV === "production";
-const outputDir = "/dist/";
 const PORT = 3000;
 
 module.exports = {
   mode: isProduction ? "production" : "development",
   entry: "./src/app/index.tsx",
   output: {
-    path: path.join(__dirname, outputDir), // path in project for server to find and send compiled static files
+    path: path.join(__dirname, "..", "..", "public"), // path in project for server to find and send compiled static files
     publicPath: "/", // used by HtmlWebPackPlugin to prepend bundle.js with an absolute path in browser
     filename: "bundle.js",
   },
@@ -40,7 +39,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".js", ".ts", ".tsx"],
+    extensions: [".js", ".ts", ".tsx", ".graphql", ".gql"],
   },
   devtool: isProduction ? false : "inline-source-map", // maps compiled code back to original source code
   devServer: {

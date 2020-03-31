@@ -9,11 +9,11 @@ import { getGraphQLContext } from "./graphql/helpers/graphql-utils";
 
 const app = express();
 
-const DIST_DIR = path.resolve(__dirname, "..", "./app", "dist");
-const HTML_FILE = path.join(DIST_DIR, "index.html");
+const ASSETS_DIR = path.resolve(__dirname, "..", "public");
+const HTML_FILE = path.join(ASSETS_DIR, "index.html");
 
 // compiled static asset bundle (javascript, css) to run in client browser
-app.use(express.static(DIST_DIR));
+app.use(express.static(ASSETS_DIR));
 
 // serve HTML file for React to plug into
 app.get("*", (req: express.Request, res: express.Response) => {

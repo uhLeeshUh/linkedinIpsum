@@ -1,5 +1,9 @@
 node_modules/
 
+# compiled server code
 dist/
+
+# compiled assets to be sent to browser
+public/
 
 .env
