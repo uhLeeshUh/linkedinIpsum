@@ -4,14 +4,12 @@
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "removeComments": true,
-    "outDir": "./dist",
     "esModuleInterop": true,
     "jsx": "react",
     "allowJs": false,
     "checkJs": false,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "baseUrl": "./",
@@ -25,5 +23,5 @@
     "./src/app/**/*.ts",
     "./src/app/**/*.tsx"
   ],
-  "exclude": ["node_modules", "webpack.*.js"]
+  "exclude": ["public", "dist", "node_modules", "webpack.*.js"]
 }
