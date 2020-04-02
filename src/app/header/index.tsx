@@ -6,11 +6,13 @@ const Header = () => {
   return (
     <header className={styles.extendedNavContainer}>
       <div className={styles.navContainer}>
-        <div>
-          <Icon iconName="linkedIn" />
-          <div>LinkedIn Ipsum</div>
+        <div className={styles.navSection}>
+          <p className={styles.linkedInLogo}>in</p>
+          <div className={styles.searchBar}>
+            <p className={styles.linkedInIpsumTitle}>Linkedin Ipsum</p>
+          </div>
         </div>
-        <div>
+        <div className={styles.navSection}>
           <Icon iconName="homeOutlined" iconText="Home" />
           <Icon iconName="peopleAltOutlined" iconText="My Network" />
           <Icon iconName="workOutlineOutlined" iconText="Jobs" />

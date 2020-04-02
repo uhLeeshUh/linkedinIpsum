@@ -2,7 +2,11 @@
 // Please do not change this file!
 interface CssExports {
   'extendedNavContainer': string;
+  'linkedInIpsumTitle': string;
+  'linkedInLogo': string;
   'navContainer': string;
+  'navSection': string;
+  'searchBar': string;
 }
 export const cssExports: CssExports;
 export default cssExports;
