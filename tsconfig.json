@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "ES2015",
+    "module": "CommonJS", // https://www.npmjs.com/package/ts-node#import-statements
     "moduleResolution": "node",
     "target": "ES5",
     "lib": ["dom", "dom.iterable", "esnext"],
