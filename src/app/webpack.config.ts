@@ -1,11 +1,12 @@
 import HtmlWebPackPlugin from "html-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path from "path";
 
 const isProduction = process.env.NODE_ENV === "production";
 const PORT = 3000;
 
-module.exports = {
+const webpackConfig = {
   mode: isProduction ? "production" : "development",
   entry: "./src/app/index.tsx",
   output: {
@@ -36,10 +37,32 @@ module.exports = {
         test: /\.(graphql|gql)$/,
         loader: "graphql-tag/loader",
       },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: isProduction ? MiniCssExtractPlugin.loader : "style-loader",
+            options: {
+              esModule: true,
+            },
+          },
+          "css-modules-typescript-loader",
+          {
+            loader: "css-loader",
+            options: {
+              esModule: true,
+              modules: {
+                mode: "local",
+                localIdentName: "[name]-[local]-[hash:base64]",
+              },
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
-    extensions: [".js", ".ts", ".tsx", ".graphql", ".gql"],
+    extensions: [".js", ".ts", ".tsx", ".graphql", ".gql", ".css"],
   },
   devtool: isProduction ? false : "inline-source-map", // maps compiled code back to original source code
   devServer: {
@@ -58,3 +81,5 @@ module.exports = {
     }),
   ],
 };
+
+export default webpackConfig;
