@@ -1,0 +1,12 @@
+.extendedNavContainer {
+  padding: 0 30px;
+  background: #283e4a;
+  border-top: none;
+  box-shadow: none;
+  height: 52px;
+}
+
+.navContainer {
+  max-width: 1128px;
+  margin: auto;
+}
