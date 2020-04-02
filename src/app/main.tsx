@@ -1,9 +1,10 @@
 import React from "react";
+import Header from "./header";
 
 const Main: React.FunctionComponent = props => {
   return (
     <>
-      <h1>LinkedIn Ipsum</h1>
+      <Header />
       {props.children}
       {/* error handling should go here */}
     </>
