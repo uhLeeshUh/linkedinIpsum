@@ -4,6 +4,7 @@
   border-top: none;
   box-shadow: none;
   height: 52px;
+  user-select: none;
 }
 
 .navContainer {
@@ -21,14 +22,19 @@
   flex-direction: row;
 }
 
+.navRight {
+  width: 35%;
+  justify-content: space-between;
+}
+
 .linkedInLogo {
   font-family: "Roboto", sans-serif;
   font-weight: 700;
   font-size: 33px;
   color: white;
   background: #0077b5;
-  padding: 2px 4px 0px 4px;
-  border-radius: 4px;
+  padding: 1px 4px 0px 4px;
+  border-radius: 3px;
 }
 
 .searchBar {
@@ -45,5 +51,9 @@
   font-weight: 400;
   font-size: 18px;
   color: rgba(40, 62, 74, 0.75);
+  padding-left: 3px;
+}
+
+.searchIcon {
   padding-left: 10px;
 }

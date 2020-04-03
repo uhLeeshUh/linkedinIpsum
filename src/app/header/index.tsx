@@ -1,6 +1,7 @@
 import React from "react";
 import Icon from "../icon";
 import styles from "./css/header.css";
+import classnames from "classnames";
 
 const Header = () => {
   return (
@@ -9,10 +10,13 @@ const Header = () => {
         <div className={styles.navSection}>
           <p className={styles.linkedInLogo}>in</p>
           <div className={styles.searchBar}>
+            <div className={styles.searchIcon}>
+              <Icon iconName="search" isSmall isSearch />
+            </div>
             <p className={styles.linkedInIpsumTitle}>Linkedin Ipsum</p>
           </div>
         </div>
-        <div className={styles.navSection}>
+        <div className={classnames(styles.navSection, styles.navRight)}>
           <Icon iconName="homeOutlined" iconText="Home" />
           <Icon iconName="peopleAltOutlined" iconText="My Network" />
           <Icon iconName="workOutlineOutlined" iconText="Jobs" />

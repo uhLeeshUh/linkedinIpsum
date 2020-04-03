@@ -5,8 +5,10 @@ interface CssExports {
   'linkedInIpsumTitle': string;
   'linkedInLogo': string;
   'navContainer': string;
+  'navRight': string;
   'navSection': string;
   'searchBar': string;
+  'searchIcon': string;
 }
 export const cssExports: CssExports;
 export default cssExports;
