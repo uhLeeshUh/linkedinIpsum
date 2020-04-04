@@ -2,13 +2,14 @@ import upperFirst from "lodash/upperFirst";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import getIndustriesQuery from "./graphql/queries/get-industries.graphql";
-import bioCreateMutation from "./graphql/mutations/bio-create.graphql";
+import getIndustriesQuery from "../graphql/queries/get-industries.graphql";
+import bioCreateMutation from "../graphql/mutations/bio-create.graphql";
 import {
   IIndustry,
   IIndustriesData,
   IBioCreateData,
-} from "./graphql/graphql-types";
+} from "../graphql/graphql-types";
+import styles from "./css/form.css";
 
 const Form = () => {
   const [name, setName] = useState("");
@@ -49,7 +50,7 @@ const Form = () => {
 
   return (
     <div>
-      <div>What is your name?</div>
+      <div className={styles.formTitle}>What is your name?</div>
       <input
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setName(e.currentTarget.value)
@@ -57,7 +58,9 @@ const Form = () => {
       />
       <br />
       <br />
-      <div>In what industry do you conduct business?</div>
+      <div className={styles.formTitle}>
+        In what industry do you conduct business?
+      </div>
       <select
         onChange={e => setIndustryId(e.currentTarget.value)}
         defaultValue="default"
