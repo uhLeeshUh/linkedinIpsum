@@ -9,6 +9,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const PORT = 3000;
 const getPlugins = (isProduction: boolean) => {
   const plugins: any[] = [
+    new MiniCssExtractPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
       template: "./src/server/index.html",
