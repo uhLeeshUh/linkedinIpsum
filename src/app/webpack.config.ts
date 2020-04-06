@@ -1,10 +1,31 @@
 import HtmlWebPackPlugin from "html-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
+import cssnano from "cssnano";
 import path from "path";
 
 const isProduction = process.env.NODE_ENV === "production";
 const PORT = 3000;
+const getPlugins = (isProduction: boolean) => {
+  const plugins: any[] = [
+    new CleanWebpackPlugin(),
+    new HtmlWebPackPlugin({
+      template: "./src/server/index.html",
+      filename: "./index.html",
+    }),
+  ];
+
+  if (isProduction) {
+    plugins.push(
+      new OptimizeCssAssetsPlugin({
+        cssProcessor: cssnano,
+      }),
+    );
+  }
+
+  return plugins;
+};
 
 const webpackConfig = {
   mode: isProduction ? "production" : "development",
@@ -73,13 +94,7 @@ const webpackConfig = {
       "/graphql": "http://localhost:8080", // proxy graphql requests to dev backend server
     },
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebPackPlugin({
-      template: "./src/server/index.html",
-      filename: "./index.html",
-    }),
-  ],
+  plugins: getPlugins(isProduction),
 };
 
 export default webpackConfig;
