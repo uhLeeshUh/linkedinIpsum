@@ -1,12 +1,14 @@
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import React from "react";
 import { useParams } from "react-router-dom";
-import getBioQuery from "./graphql/queries/get-bio.graphql";
-import bioOptimizeMutation from "./graphql/mutations/bio-optimize.graphql";
-import { IBioData, IBio, IBioOptimizeData } from "./graphql/graphql-types";
+import getBioQuery from "../graphql/queries/get-bio.graphql";
+import bioOptimizeMutation from "../graphql/mutations/bio-optimize.graphql";
+import { IBioData, IBio, IBioOptimizeData } from "../graphql/graphql-types";
 import find from "lodash/find";
 import { useHistory } from "react-router-dom";
-import Variable from "./variable";
+import Variable from "../variable";
+import styles from "./css/bio.css";
+import classnames from "classnames";
 
 const Bio = () => {
   const { bioId } = useParams();
@@ -58,12 +60,19 @@ const Bio = () => {
   return (
     <>
       <div>
-        <h2>{data && data.bio ? data.bio.name : "Business Professional"}</h2>
+        <h2 className={styles.bioContent}>
+          {data && data.bio ? data.bio.name : "Business Professional"}
+        </h2>
       </div>
-      <div>{data && data.bio ? assembleBioText(data.bio) : "not defined"}</div>
+      <br />
+      <div>
+        <h3 className={styles.bioContent}>About</h3>
+        <p className={classnames(styles.bioContent, styles.bioText)}>
+          {data && data.bio ? assembleBioText(data.bio) : "not defined"}
+        </p>
+      </div>
       <br />
       {getOptimizeButtonHtml()}
-      <br />
       <br />
       <button onClick={onClickCreateNewBio}>Make a new bio</button>
     </>

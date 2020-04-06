@@ -1,0 +1,9 @@
+.bioContent {
+  font-family: "Roboto", sans-serif;
+  color: rgba(0, 0, 0, 0.9);
+  margin-bottom: 10px;
+}
+
+.bioText {
+  font-size: 0.9rem;
+}
