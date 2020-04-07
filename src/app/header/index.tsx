@@ -1,5 +1,5 @@
 import React from "react";
-import Icon from "../icon/index";
+import Icon from "../icon";
 import styles from "./css/header.css";
 import classnames from "classnames";
 
