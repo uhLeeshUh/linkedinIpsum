@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import Variable from "../variable";
 import styles from "./css/bio.css";
 import classnames from "classnames";
+import Button from "../button";
 
 const Bio = () => {
   const { bioId } = useParams();
@@ -53,7 +54,7 @@ const Bio = () => {
       bioChunkWithVariable = find(bioChunks, "followingVariable");
     }
     return bioChunkWithVariable ? (
-      <button onClick={onClickOptimize}>Optimize my bio!</button>
+      <Button buttonText="Optimize my bio!" onClick={onClickOptimize} />
     ) : null;
   };
 
@@ -74,14 +75,14 @@ const Bio = () => {
       <br />
       {getOptimizeButtonHtml()}
       <br />
-      <button onClick={onClickCreateNewBio}>Make a new bio</button>
+      <Button buttonText="Go home" onClick={onClickCreateNewBio} />
     </>
   );
 };
 
 const assembleBioText = (bio: IBio) => {
   const bioTextHtml: JSX.Element[] = [];
-  bio.bioChunks.forEach(bioChunk => {
+  bio.bioChunks.forEach((bioChunk) => {
     const { templateChunk, followingVariable } = bioChunk;
     bioTextHtml.push(<span>{templateChunk.chunkText}</span>);
     if (followingVariable) {
