@@ -1,0 +1,10 @@
+#import "./full-bio-chunk.graphql"
+
+fragment FullBio on Bio {
+  id
+  name
+  industryId
+  bioChunks {
+    ...FullBioChunk
+  }
+}

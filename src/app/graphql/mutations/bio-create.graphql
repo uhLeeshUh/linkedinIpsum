@@ -1,11 +1,7 @@
-#import "../fragments/full-bio-chunk.graphql"
+#import "../fragments/full-bio.graphql"
 
 mutation bioCreate($industryId: ID!, $name: String!) {
   bioCreate(input: { industryId: $industryId, name: $name }) {
-    id
-    name
-    bioChunks {
-      ...FullBioChunk
-    }
+    ...FullBio
   }
 }
