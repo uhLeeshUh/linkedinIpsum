@@ -82,7 +82,7 @@ export const bioOptimize = async (
   { getDatabaseTransaction, testTransaction }: IGraphQLContext,
 ): Promise<IBio> => {
   return getDatabaseTransaction(testTransaction, async (txn) => {
-    const { bioId, name } = args.input;
+    const { bioId } = args.input;
 
     const previousBio = await Bio.getById(bioId, txn);
     const optimizedBio = await Bio.create(
