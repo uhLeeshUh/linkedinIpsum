@@ -10,6 +10,7 @@ import {
   IBioCreateData,
 } from "../graphql/graphql-types";
 import styles from "./css/form.css";
+import Button from "../button";
 
 const Form = () => {
   const [name, setName] = useState("");
@@ -62,7 +63,7 @@ const Form = () => {
         In what industry do you conduct business?
       </div>
       <select
-        onChange={e => setIndustryId(e.currentTarget.value)}
+        onChange={(e) => setIndustryId(e.currentTarget.value)}
         defaultValue="default"
       >
         <option value="default" disabled>
@@ -72,9 +73,7 @@ const Form = () => {
       </select>
       <br />
       <br />
-      <button type="button" onClick={onSubmit}>
-        Make my bio!
-      </button>
+      <Button buttonText="Make my bio!" onClick={onSubmit} />
     </div>
   );
 };
