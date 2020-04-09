@@ -5,6 +5,7 @@ import Bio from "../bio";
 import TemplateChunk from "../template-chunk";
 import Variable from "../variable";
 import { getMockAdvertisingTemplateChunks } from "../helpers/spec-helpers";
+import Industry from "../industry";
 
 describe("BioTemplateChunk model", () => {
   let testDb: ReturnType<typeof setupTestDb>;
@@ -42,7 +43,11 @@ describe("BioTemplateChunk model", () => {
       let bioTemplateChunk3: BioTemplateChunk;
 
       beforeEach(async () => {
-        bio = await Bio.create({ name: "Katniss Everdeen" }, txn);
+        const industry = await Industry.create({ name: "industry-name" }, txn);
+        bio = await Bio.create(
+          { name: "Katniss Everdeen", industryId: industry.id },
+          txn,
+        );
 
         ({
           templateChunk0,
@@ -151,7 +156,11 @@ describe("BioTemplateChunk model", () => {
       let bioTemplateChunk0: BioTemplateChunk;
 
       beforeEach(async () => {
-        bio = await Bio.create({ name: "Neville Longbottom" }, txn);
+        const industry = await Industry.create({ name: "industry-name" }, txn);
+        bio = await Bio.create(
+          { name: "Neville Longbottom", industryId: industry.id },
+          txn,
+        );
         templateChunk0 = await TemplateChunk.query(txn).findOne({
           chunkText: "Dangerous when bored.",
         });
