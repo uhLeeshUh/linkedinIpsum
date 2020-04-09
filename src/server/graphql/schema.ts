@@ -19,6 +19,7 @@ const typeDefs = gql`
   type Bio {
     id: ID!
     name: String!
+    industryId: ID!
     bioChunks: [BioChunk!]!
   }
 
