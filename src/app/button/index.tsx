@@ -3,7 +3,7 @@ import styles from "./css/button.css";
 
 interface IProps {
   buttonText: string;
-  onClick(): void;
+  onClick: () => void | Promise<void>;
 }
 
 const Button = ({ buttonText, onClick }: IProps) => {

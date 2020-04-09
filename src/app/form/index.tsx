@@ -13,7 +13,7 @@ const Form = () => {
   const { loading, error, data } = useQuery<IIndustriesData>(
     getIndustriesQuery,
   );
-  const onSubmit = useCreateBio({ name, industryId });
+  const onSubmit = useCreateBio({ bio: { name, industryId } });
 
   if (loading) return null;
   if (error) {

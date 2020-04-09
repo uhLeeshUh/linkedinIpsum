@@ -1,23 +1,27 @@
 import bioCreateMutation from "../graphql/mutations/bio-create.graphql";
-import { IBioCreateData } from "../graphql/graphql-types";
+import { IBioCreateData, IBioCreateVariables } from "../graphql/graphql-types";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
+import noop from "lodash/noop";
 
 interface ICreateBioProps {
-  name: string;
-  industryId: string;
+  bio: IBioCreateVariables;
 }
 
-const useCreateBio = ({ name, industryId }: ICreateBioProps) => {
-  const [createBio] = useMutation<IBioCreateData>(bioCreateMutation);
+const useCreateBio = (props: ICreateBioProps | undefined) => {
+  const [createBio] = useMutation<IBioCreateData, IBioCreateVariables>(
+    bioCreateMutation,
+  );
   const history = useHistory();
+
+  if (!props) return noop;
+  const { industryId, name } = props.bio;
 
   return async () => {
     try {
       const result = await createBio({
         variables: { industryId, name },
       });
-
       if (result.data) {
         history.push(`/bio/${result.data.bioCreate.id}`);
       }

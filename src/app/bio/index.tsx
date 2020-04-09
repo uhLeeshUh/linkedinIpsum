@@ -26,6 +26,7 @@ const Bio = () => {
   const [optimizeBio] = useMutation<IBioOptimizeData, IBioOptimizeVariables>(
     bioOptimizeMutation,
   );
+  const onClickCreateNewBio = useCreateBio(data);
 
   if (loading && !data) return null;
   if (error) {
@@ -52,10 +53,6 @@ const Bio = () => {
   const onClickStartOver = () => {
     history.push("/form");
   };
-
-  // const onClickCreateNewBio = async () => {
-  //   return useCreateBio();
-  // };
 
   const getOptimizeButtonHtml = () => {
     let bioChunkWithVariable;
@@ -87,6 +84,7 @@ const Bio = () => {
       <br />
       {getOptimizeButtonHtml()}
       <br />
+      <Button buttonText="Make me a new one!" onClick={onClickCreateNewBio} />
       <Button buttonText="Start Over" onClick={onClickStartOver} />
     </>
   );
@@ -94,11 +92,11 @@ const Bio = () => {
 
 const assembleBioText = (bio: IBio) => {
   const bioTextHtml: JSX.Element[] = [];
-  bio.bioChunks.forEach((bioChunk) => {
+  bio.bioChunks.forEach((bioChunk, i) => {
     const { id, templateChunk, followingVariable } = bioChunk;
     bioTextHtml.push(<span key={id}>{templateChunk.chunkText}</span>);
     if (followingVariable) {
-      bioTextHtml.push(<Variable key={id} variable={followingVariable} />);
+      bioTextHtml.push(<Variable key={i} variable={followingVariable} />);
     }
   });
   return bioTextHtml;
