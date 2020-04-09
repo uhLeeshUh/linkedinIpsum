@@ -3,10 +3,12 @@ import { JSONSchema, Transaction } from "objection";
 
 interface IBioCreateFields {
   name: string;
+  industryId: string;
 }
 
 export default class Bio extends BaseModel {
   name!: string;
+  industryId!: string;
 
   static tableName = "bio";
 
@@ -15,10 +17,12 @@ export default class Bio extends BaseModel {
     properties: {
       id: { type: "string", format: "uuid" },
       name: { type: "string", minLength: 1 },
+      industryId: { type: "string", format: "uuid" },
       updatedAt: { type: "string" },
       createdAt: { type: "string" },
       deletedAt: { type: "string" },
     },
+    required: ["name", "industryId"],
   };
 
   static async getById(bioId: string, txn: Transaction): Promise<Bio> {
