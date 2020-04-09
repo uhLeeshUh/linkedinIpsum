@@ -1,4 +1,4 @@
-import { IBioCreateInput, IBioOptimizeInput } from "schema";
+import { IBioCreateInput, IBioOptimizeInput, IBio } from "schema";
 import Bio from "../../models/bio";
 import { IGraphQLContext } from "../helpers/graphql-utils";
 import Template from "../../models/template";
@@ -14,14 +14,14 @@ export const resolveBio = async (
   root: {},
   args: { bioId: string },
   { getDatabaseTransaction, testTransaction }: IGraphQLContext,
-) => {
-  return getDatabaseTransaction(testTransaction, async txn => {
+): Promise<IBio> => {
+  return getDatabaseTransaction(testTransaction, async (txn) => {
     const resolvedBio = await Bio.getById(args.bioId, txn);
     const bioTemplateChunks = await BioTemplateChunk.getAllForBio(
       args.bioId,
       txn,
     );
-    const bioChunks = bioTemplateChunks.map(bioTemplateChunk => ({
+    const bioChunks = bioTemplateChunks.map((bioTemplateChunk) => ({
       id: bioTemplateChunk.templateChunk.id,
       templateChunk: pick(bioTemplateChunk.templateChunk, [
         "id",
@@ -33,7 +33,12 @@ export const resolveBio = async (
         : null,
     }));
 
-    return { id: resolvedBio.id, name: resolvedBio.name, bioChunks };
+    return {
+      id: resolvedBio.id,
+      name: resolvedBio.name,
+      industryId: resolvedBio.industryId,
+      bioChunks,
+    };
   });
 };
 
@@ -41,11 +46,11 @@ export const bioCreate = async (
   root: {},
   args: { input: IBioCreateInput },
   { getDatabaseTransaction, testTransaction }: IGraphQLContext,
-) => {
-  return getDatabaseTransaction(testTransaction, async txn => {
+): Promise<IBio> => {
+  return getDatabaseTransaction(testTransaction, async (txn) => {
     const { name, industryId } = args.input;
 
-    const createdBio = await Bio.create({ name }, txn);
+    const createdBio = await Bio.create({ name, industryId }, txn);
 
     const randomTemplateForBio = await Template.getRandomByIndustryId(
       industryId,
@@ -62,7 +67,12 @@ export const bioCreate = async (
       txn,
     );
 
-    return { id: createdBio.id, name: createdBio.name, bioChunks };
+    return {
+      id: createdBio.id,
+      name: createdBio.name,
+      industryId: createdBio.industryId,
+      bioChunks,
+    };
   });
 };
 
@@ -70,11 +80,15 @@ export const bioOptimize = async (
   root: {},
   args: { input: IBioOptimizeInput },
   { getDatabaseTransaction, testTransaction }: IGraphQLContext,
-) => {
-  return getDatabaseTransaction(testTransaction, async txn => {
+): Promise<IBio> => {
+  return getDatabaseTransaction(testTransaction, async (txn) => {
     const { bioId, name } = args.input;
 
-    const optimizedBio = await Bio.create({ name }, txn);
+    const previousBio = await Bio.getById(bioId, txn);
+    const optimizedBio = await Bio.create(
+      { name: previousBio.name, industryId: previousBio.industryId },
+      txn,
+    );
 
     const oldBioTemplateChunks = await BioTemplateChunk.getAllForBio(
       bioId,
@@ -86,6 +100,11 @@ export const bioOptimize = async (
       txn,
     );
 
-    return { id: optimizedBio.id, name: optimizedBio.name, bioChunks };
+    return {
+      id: optimizedBio.id,
+      name: optimizedBio.name,
+      industryId: optimizedBio.industryId,
+      bioChunks,
+    };
   });
 };
