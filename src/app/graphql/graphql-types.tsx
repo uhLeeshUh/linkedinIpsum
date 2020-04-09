@@ -7,8 +7,17 @@ export interface IIndustry {
   name: string;
 }
 
+export interface IBioCreateVariables {
+  name: string;
+  industryId: string;
+}
+
 export interface IBioCreateData {
   bioCreate: IBio;
+}
+
+export interface IBioOptimizeVariables {
+  bioId: string;
 }
 
 export interface IBioOptimizeData {

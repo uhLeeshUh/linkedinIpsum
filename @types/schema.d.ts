@@ -28,7 +28,6 @@ declare module "schema" {
 
   export interface IBioOptimizeInput {
     bioId: string;
-    name: string;
   }
 
   export interface IBioChunk {
