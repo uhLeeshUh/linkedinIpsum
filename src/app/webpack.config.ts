@@ -43,7 +43,7 @@ const webpackConfig = {
         test: /\.m?tsx?$/,
         use: [
           {
-            loader: "awesome-typescript-loader",
+            loader: "awesome-typescript-loader?module=es6",
           },
         ],
       },
