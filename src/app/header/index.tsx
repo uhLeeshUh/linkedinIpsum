@@ -2,13 +2,19 @@ import React from "react";
 import Icon from "../icon";
 import styles from "./css/header.css";
 import classnames from "classnames";
+import { useHistory } from "react-router-dom";
 
 const Header = () => {
+  const history = useHistory();
+  const onClick = () => history.push("/");
+
   return (
     <header className={styles.extendedNavContainer}>
       <div className={styles.navContainer}>
         <div className={styles.navSection}>
-          <p className={styles.linkedInLogo}>in</p>
+          <p className={styles.linkedInLogo} onClick={onClick}>
+            in
+          </p>
           <div className={styles.searchBar}>
             <div className={styles.searchIcon}>
               <Icon iconName="search" isSmall isSearch />
