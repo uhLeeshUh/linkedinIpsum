@@ -3,13 +3,19 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import getBioQuery from "../graphql/queries/get-bio.graphql";
 import bioOptimizeMutation from "../graphql/mutations/bio-optimize.graphql";
-import { IBioData, IBio, IBioOptimizeData } from "../graphql/graphql-types";
+import {
+  IBioData,
+  IBio,
+  IBioOptimizeData,
+  IBioOptimizeVariables,
+} from "../graphql/graphql-types";
 import find from "lodash/find";
 import { useHistory } from "react-router-dom";
 import Variable from "../variable";
 import styles from "./css/bio.css";
 import classnames from "classnames";
 import Button from "../button";
+import useCreateBio from "../custom-hooks/use-create-bio";
 
 const Bio = () => {
   const { bioId } = useParams();
@@ -17,7 +23,9 @@ const Bio = () => {
   const { data, loading, error } = useQuery<IBioData>(getBioQuery, {
     variables: { bioId },
   });
-  const [optimizeBio] = useMutation<IBioOptimizeData>(bioOptimizeMutation);
+  const [optimizeBio] = useMutation<IBioOptimizeData, IBioOptimizeVariables>(
+    bioOptimizeMutation,
+  );
 
   if (loading && !data) return null;
   if (error) {
@@ -29,7 +37,7 @@ const Bio = () => {
     if (data) {
       try {
         const result = await optimizeBio({
-          variables: { bioId, name: data.bio.name },
+          variables: { bioId: data.bio.id },
         });
 
         if (result.data) {
@@ -41,9 +49,13 @@ const Bio = () => {
     }
   };
 
-  const onClickCreateNewBio = () => {
+  const onClickStartOver = () => {
     history.push("/form");
   };
+
+  // const onClickCreateNewBio = async () => {
+  //   return useCreateBio();
+  // };
 
   const getOptimizeButtonHtml = () => {
     let bioChunkWithVariable;
@@ -75,7 +87,7 @@ const Bio = () => {
       <br />
       {getOptimizeButtonHtml()}
       <br />
-      <Button buttonText="Go home" onClick={onClickCreateNewBio} />
+      <Button buttonText="Start Over" onClick={onClickStartOver} />
     </>
   );
 };
@@ -83,10 +95,10 @@ const Bio = () => {
 const assembleBioText = (bio: IBio) => {
   const bioTextHtml: JSX.Element[] = [];
   bio.bioChunks.forEach((bioChunk) => {
-    const { templateChunk, followingVariable } = bioChunk;
-    bioTextHtml.push(<span>{templateChunk.chunkText}</span>);
+    const { id, templateChunk, followingVariable } = bioChunk;
+    bioTextHtml.push(<span key={id}>{templateChunk.chunkText}</span>);
     if (followingVariable) {
-      bioTextHtml.push(<Variable variable={followingVariable} />);
+      bioTextHtml.push(<Variable key={id} variable={followingVariable} />);
     }
   });
   return bioTextHtml;
