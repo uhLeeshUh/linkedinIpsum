@@ -22,6 +22,7 @@ export interface IBioData {
 export interface IBio {
   id: string;
   name: string;
+  industryId: string;
   bioChunks: IBioChunk[];
 }
 

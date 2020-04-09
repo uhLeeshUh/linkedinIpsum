@@ -16,6 +16,7 @@ type Industry {
 type Bio {
   id: ID!
   name: String!
+  industryId: ID!
   bioChunks: [BioChunk!]!
 }
 
