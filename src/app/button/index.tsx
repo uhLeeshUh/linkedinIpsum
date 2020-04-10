@@ -7,8 +7,17 @@ interface IProps {
 }
 
 const Button = ({ buttonText, onClick }: IProps) => {
+  const onMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  };
+
   return (
-    <button className={styles.button} type="button" onClick={onClick}>
+    <button
+      className={styles.button}
+      type="button"
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+    >
       {buttonText}
     </button>
   );
