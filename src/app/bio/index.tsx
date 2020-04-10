@@ -82,10 +82,9 @@ const Bio = () => {
         </p>
       </div>
       <br />
-      {getOptimizeButtonHtml()}
-      <br />
       <Button buttonText="Make me a new one!" onClick={onClickCreateNewBio} />
       <Button buttonText="Start Over" onClick={onClickStartOver} />
+      {getOptimizeButtonHtml()}
     </>
   );
 };
