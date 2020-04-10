@@ -8,6 +8,7 @@ import {
   IBio,
   IBioOptimizeData,
   IBioOptimizeVariables,
+  IBioResolveVariables,
 } from "../graphql/graphql-types";
 import find from "lodash/find";
 import { useHistory } from "react-router-dom";
@@ -20,9 +21,12 @@ import useCreateBio from "../custom-hooks/use-create-bio";
 const Bio = () => {
   const { bioId } = useParams();
   const history = useHistory();
-  const { data, loading, error } = useQuery<IBioData>(getBioQuery, {
-    variables: { bioId },
-  });
+  const { data, loading, error } = useQuery<IBioData, IBioResolveVariables>(
+    getBioQuery,
+    {
+      variables: { bioId: bioId! },
+    },
+  );
   const [optimizeBio] = useMutation<IBioOptimizeData, IBioOptimizeVariables>(
     bioOptimizeMutation,
   );

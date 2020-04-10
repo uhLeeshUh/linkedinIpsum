@@ -24,6 +24,10 @@ export interface IBioOptimizeData {
   bioOptimize: IBio;
 }
 
+export interface IBioResolveVariables {
+  bioId: string;
+}
+
 export interface IBioData {
   bio: IBio;
 }
