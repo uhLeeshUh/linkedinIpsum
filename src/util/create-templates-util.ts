@@ -1,13 +1,13 @@
 import { Transaction } from "objection";
-import Template from "../models/template";
+import Template from "../server/models/template";
 import isEmpty from "lodash/isEmpty";
-import Industry from "../models/industry";
-import IndustryTemplate from "../models/industry-template";
+import Industry from "../server/models/industry";
+import IndustryTemplate from "../server/models/industry-template";
 import TemplateChunk, {
   ITemplateChunkCreateFields,
-} from "../models/template-chunk";
-import Variable from "../models/variable";
-import VariableCategory from "../models/variable-category";
+} from "../server/models/template-chunk";
+import Variable from "../server/models/variable";
+import VariableCategory from "../server/models/variable-category";
 
 type IndustryType = "finance" | "tech" | "advertising" | "consulting";
 
@@ -39,19 +39,23 @@ const createTemplates = async (
   templates: ITemplateForCreation[],
   txn: Transaction,
 ) => {
-  const templatePromises = templates.map(async template => {
-    // (1) ensure that at least one industry was passed for the template
-    await checkThatIndustriesArePassedIn(template);
+  try {
+    const templatePromises = templates.map(async (template) => {
+      // (1) ensure that at least one industry was passed for the template
+      await checkThatIndustriesArePassedIn(template);
 
-    const TEMPLATE = await Template.create(txn);
+      const TEMPLATE = await Template.create(txn);
 
-    // (2) create IndustryTemplate instance for each passed in industry
-    await createIndustryTemplates(template.industries, TEMPLATE, txn);
+      // (2) create IndustryTemplate instance for each passed in industry
+      await createIndustryTemplates(template.industries, TEMPLATE, txn);
 
-    // (3) create TemplateChunks
-    return createTemplateChunks(TEMPLATE, template.templateChunks, txn);
-  });
-  return Promise.all(templatePromises);
+      // (3) create TemplateChunks
+      return createTemplateChunks(TEMPLATE, template.templateChunks, txn);
+    });
+    return Promise.all(templatePromises);
+  } catch (err) {
+    return Promise.reject(`!! [CREATE TEMPLATE ERROR]: ${err}`);
+  }
 };
 
 const createTemplateChunks = async (
@@ -201,7 +205,7 @@ const createIndustryTemplates = async (
   template: Template,
   txn: Transaction,
 ) => {
-  const industryTemplatePromises = industries.map(async industry => {
+  const industryTemplatePromises = industries.map(async (industry) => {
     const INDUSTRY = await Industry.getByName(industry, txn);
     if (INDUSTRY) {
       const createdIndustryTemplate = await IndustryTemplate.create(
