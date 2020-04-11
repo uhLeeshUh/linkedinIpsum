@@ -21,7 +21,9 @@
     "@types",
     "./src/server/**/*.ts",
     "./src/app/**/*.ts",
-    "./src/app/**/*.tsx"
+    "./src/app/**/*.tsx",
+    "./src/scripts/**/*.ts",
+    "./src/util/*.ts"
   ],
   "exclude": ["public", "dist", "node_modules", "webpack.*.js"]
 }
