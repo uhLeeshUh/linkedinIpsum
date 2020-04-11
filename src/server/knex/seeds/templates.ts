@@ -3,7 +3,7 @@ import { transaction, Model } from "objection";
 import { setupTestDb } from "../../helpers/test-helpers";
 import createTemplatesUtil, {
   ITemplateForCreation,
-} from "../../helpers/create-templates-util";
+} from "../../../util/create-templates-util";
 
 export async function seed(knex: Knex): Promise<any> {
   const setupDb = setupTestDb();
@@ -16,7 +16,7 @@ export async function seed(knex: Knex): Promise<any> {
   await knex("variable").del();
 
   try {
-    await transaction(Model.knex(), async txn => {
+    await transaction(Model.knex(), async (txn) => {
       return createTemplatesUtil(SEED_TEMPLATES, txn);
     });
   } catch (err) {
