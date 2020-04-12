@@ -18,7 +18,9 @@
     "seed:make": "npm run knex -- seed:make --knexfile=src/server/knex/knexfile.ts",
     "seed:run": "npm run knex -- seed:run --knexfile=src/server/knex/knexfile.ts",
     "migrate-test-db": "NODE_ENV=test ts-node -P tsconfig.json ./src/server/helpers/migrate-test-db.ts",
-    "test": "NODE_ENV=test npm run migrate-test-db && node node_modules/.bin/jest --runInBand --logHeapUsage --detectOpenHandles"
+    "test": "NODE_ENV=test npm run migrate-test-db && node node_modules/.bin/jest --runInBand --logHeapUsage --detectOpenHandles",
+    "load-templates:dev": "NODE_ENV=development ts-node -P tsconfig.json ./src/scripts/load-templates.ts",
+    "load-templates:prod": "NODE_ENV=production ts-node -P tsconfig.json ./src/scripts/load-templates.ts"
   },
   "keywords": [],
   "author": "Alicia Underhill",
