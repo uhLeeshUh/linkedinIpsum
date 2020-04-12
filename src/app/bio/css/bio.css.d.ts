@@ -12,6 +12,7 @@ interface CssExports {
   'bioIntroContentFooterText': string;
   'bioSection': string;
   'bioText': string;
+  'profilePicContainer': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

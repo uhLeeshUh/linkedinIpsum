@@ -72,6 +72,7 @@ const Bio = () => {
       <section
         className={classnames(styles.bioSection, styles.bioIntroContainer)}
       >
+        <div className={styles.profilePicContainer} />
         <div
           className={classnames(
             styles.bioIntroContainerItem,
@@ -86,10 +87,7 @@ const Bio = () => {
         >
           <div className={styles.bioButtons}>
             {getOptimizeButtonHtml()}
-            <Button
-              buttonText="Make me a new one!"
-              onClick={onClickCreateNewBio}
-            />
+            <Button buttonText="New bio" onClick={onClickCreateNewBio} />
           </div>
           <h2 className={styles.bioContent}>
             {data && data.bio ? data.bio.name : "Business Professional"}
