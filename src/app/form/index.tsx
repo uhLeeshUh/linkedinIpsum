@@ -6,6 +6,7 @@ import { IIndustry, IIndustriesData } from "../graphql/graphql-types";
 import styles from "./css/form.css";
 import Button from "../button";
 import useCreateBio from "../custom-hooks/use-create-bio";
+import classnames from "classnames";
 
 const Form = () => {
   const [name, setName] = useState("");
@@ -31,7 +32,9 @@ const Form = () => {
 
   return (
     <div>
-      <div className={styles.formTitle}>What is your name?</div>
+      <div className={classnames(styles.formTitle, styles.formItem)}>
+        What is your name?
+      </div>
       <input
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setName(e.currentTarget.value)
@@ -39,12 +42,13 @@ const Form = () => {
       />
       <br />
       <br />
-      <div className={styles.formTitle}>
+      <div className={classnames(styles.formTitle, styles.formItem)}>
         In what industry do you conduct business?
       </div>
       <select
         onChange={(e) => setIndustryId(e.currentTarget.value)}
         defaultValue="default"
+        className={classnames(styles.select, styles.formItem)}
       >
         <option value="default" disabled>
           Select an industry
