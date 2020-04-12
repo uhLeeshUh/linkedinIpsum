@@ -69,7 +69,9 @@ const Bio = () => {
 
   return (
     <div className={styles.bioContainer}>
-      <section className={styles.bioIntroContainer}>
+      <section
+        className={classnames(styles.bioSection, styles.bioIntroContainer)}
+      >
         <div
           className={classnames(
             styles.bioIntroContainerItem,
@@ -104,7 +106,9 @@ const Bio = () => {
         </div>
       </section>
 
-      <section>
+      <section
+        className={classnames(styles.bioSection, styles.bioAboutContainer)}
+      >
         <h3 className={styles.bioContent}>About</h3>
         <p className={classnames(styles.bioContent, styles.bioText)}>
           {data && data.bio ? assembleBioText(data.bio) : "not defined"}

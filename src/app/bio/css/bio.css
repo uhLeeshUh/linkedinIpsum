@@ -1,14 +1,17 @@
 .bioContainer {
   display: flex;
   flex-direction: column;
+}
+
+.bioSection {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+  width: 70%;
+  border-radius: 2px;
   margin: 15px 0;
 }
 
 .bioIntroContainer {
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
-  width: 70%;
   height: 400px;
-  border-radius: 2px;
 }
 
 .bioIntroContainerItem {
@@ -38,8 +41,15 @@
 
 .bioText {
   font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .bioIntroContentFooterText {
   color: #0073b1;
+}
+
+.bioAboutContainer {
+  background-color: #ffffff;
+  word-wrap: break-word;
+  padding: 24px;
 }
