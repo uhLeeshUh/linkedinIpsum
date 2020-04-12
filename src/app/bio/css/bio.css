@@ -1,9 +1,45 @@
+.bioContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.bioIntroContainer {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+  width: 70%;
+  height: 400px;
+  border-radius: 2px;
+}
+
+.bioIntroContainerItem {
+  height: 50%;
+}
+
+.bioBannerImage {
+  background-color: lightblue;
+}
+
+.bioIntroContent {
+  padding: 0 24px 24px;
+  background-color: #ffffff;
+}
+
+.bioButtons {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0 5px;
+}
+
 .bioContent {
   font-family: "Roboto", sans-serif;
   color: rgba(0, 0, 0, 0.9);
-  margin-bottom: 10px;
+  margin: 15px 0;
 }
 
 .bioText {
   font-size: 0.9rem;
+}
+
+.bioIntroContentFooterText {
+  color: #0073b1;
 }

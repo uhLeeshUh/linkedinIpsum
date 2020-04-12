@@ -54,10 +54,6 @@ const Bio = () => {
     }
   };
 
-  const onClickStartOver = () => {
-    history.push("/form");
-  };
-
   const getOptimizeButtonHtml = () => {
     let bioChunkWithVariable;
     if (data) {
@@ -72,24 +68,49 @@ const Bio = () => {
   };
 
   return (
-    <>
-      <div>
-        <h2 className={styles.bioContent}>
-          {data && data.bio ? data.bio.name : "Business Professional"}
-        </h2>
-      </div>
-      <br />
-      <div>
+    <div className={styles.bioContainer}>
+      <section className={styles.bioIntroContainer}>
+        <div
+          className={classnames(
+            styles.bioIntroContainerItem,
+            styles.bioBannerImage,
+          )}
+        />
+        <div
+          className={classnames(
+            styles.bioIntroContainerItem,
+            styles.bioIntroContent,
+          )}
+        >
+          <div className={styles.bioButtons}>
+            {getOptimizeButtonHtml()}
+            <Button
+              buttonText="Make me a new one!"
+              onClick={onClickCreateNewBio}
+            />
+          </div>
+          <h2 className={styles.bioContent}>
+            {data && data.bio ? data.bio.name : "Business Professional"}
+          </h2>
+          <h3 className={classnames(styles.bioContent)}>My dope title here</h3>
+          <h6
+            className={classnames(
+              styles.bioContent,
+              styles.bioIntroContentFooterText,
+            )}
+          >
+            500+ connections &middot; Contact info
+          </h6>
+        </div>
+      </section>
+
+      <section>
         <h3 className={styles.bioContent}>About</h3>
         <p className={classnames(styles.bioContent, styles.bioText)}>
           {data && data.bio ? assembleBioText(data.bio) : "not defined"}
         </p>
-      </div>
-      <br />
-      <Button buttonText="Make me a new one!" onClick={onClickCreateNewBio} />
-      <Button buttonText="Start Over" onClick={onClickStartOver} />
-      {getOptimizeButtonHtml()}
-    </>
+      </section>
+    </div>
   );
 };
 
