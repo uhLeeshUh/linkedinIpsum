@@ -92,7 +92,7 @@ const Bio = () => {
           <h2 className={styles.bioContent}>
             {data && data.bio ? data.bio.name : "Business Professional"}
           </h2>
-          <h3 className={classnames(styles.bioContent)}>My dope title here</h3>
+          <h3 className={classnames(styles.bioContent)}>My dope title here!</h3>
           <h6
             className={classnames(
               styles.bioContent,
