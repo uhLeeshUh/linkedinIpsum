@@ -31,13 +31,13 @@
 .bioButtons {
   display: flex;
   justify-content: flex-end;
-  padding: 20px 0 5px;
+  padding: 20px 0;
 }
 
 .bioContent {
   font-family: "Roboto", sans-serif;
   color: rgba(0, 0, 0, 0.9);
-  margin: 15px 0;
+  margin: 12px 0;
 }
 
 .bioText {
