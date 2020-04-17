@@ -2,6 +2,7 @@ import HtmlWebPackPlugin from "html-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
+import FaviconsWebpackPlugin from "favicons-webpack-plugin";
 import cssnano from "cssnano";
 import path from "path";
 
@@ -15,6 +16,7 @@ const getPlugins = (isProduction: boolean) => {
       template: "./src/server/index.html",
       filename: "./index.html",
     }),
+    new FaviconsWebpackPlugin("./src/app/assets/favicon.png"),
   ];
 
   if (isProduction) {
