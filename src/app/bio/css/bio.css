@@ -20,7 +20,8 @@
 }
 
 .bioBannerImage {
-  background-color: lightblue;
+  height: 100%;
+  width: 100%;
 }
 
 .bioIntroContent {

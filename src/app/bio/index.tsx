@@ -17,6 +17,7 @@ import styles from "./css/bio.css";
 import classnames from "classnames";
 import Button from "../button";
 import useCreateBio from "../custom-hooks/use-create-bio";
+import profileBannerImagePath from "../assets/banner.jpg";
 
 const Bio = () => {
   const { bioId } = useParams();
@@ -73,12 +74,13 @@ const Bio = () => {
         className={classnames(styles.bioSection, styles.bioIntroContainer)}
       >
         <div className={styles.profilePicContainer} />
-        <div
-          className={classnames(
-            styles.bioIntroContainerItem,
-            styles.bioBannerImage,
-          )}
-        />
+        <div className={classnames(styles.bioIntroContainerItem)}>
+          <img
+            className={styles.bioBannerImage}
+            src={profileBannerImagePath}
+            alt="Profile Banner"
+          />
+        </div>
         <div
           className={classnames(
             styles.bioIntroContainerItem,
