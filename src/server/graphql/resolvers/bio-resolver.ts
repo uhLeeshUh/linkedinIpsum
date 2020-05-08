@@ -57,7 +57,11 @@ export const bioCreate = async (
     );
 
     const randomTemplateForBio = await Template.getRandomByIndustryId(
-      { industryId, seenTemplateIds: seenTemplateIdsForSessionAndIndustry },
+      {
+        industryId,
+        seenTemplateIds: seenTemplateIdsForSessionAndIndustry,
+        sessionId,
+      },
       txn,
     );
 

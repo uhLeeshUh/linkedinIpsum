@@ -1,5 +1,5 @@
 import BaseModel from "./base-model";
-import { JSONSchema, Transaction } from "objection";
+import { JSONSchema, Transaction, Modifiers, QueryBuilder } from "objection";
 
 interface IBioCreateFields {
   name: string;
@@ -31,6 +31,22 @@ export default class Bio extends BaseModel {
     required: ["name", "industryId", "templateId", "sessionId"],
   };
 
+  static get modifiers(): Modifiers {
+    return {
+      biosForSessionAndIndustry(
+        queryBuilder: QueryBuilder<Bio, Bio[]>,
+        sessionId: string,
+        industryId: string,
+      ) {
+        queryBuilder
+          .select(Bio.raw('"templateId", MAX("createdAt") as "createdAt"'))
+          .where({ sessionId, industryId, deletedAt: null })
+          .groupBy("templateId")
+          .orderBy("createdAt", "DESC");
+      },
+    };
+  }
+
   static async getById(bioId: string, txn: Transaction): Promise<Bio> {
     const bio = await this.query(txn).findById(bioId);
 
@@ -53,10 +69,24 @@ export default class Bio extends BaseModel {
     industryId: string,
     txn: Transaction,
   ): Promise<string[]> {
-    const seenBios = await this.query(txn)
-      .select(this.raw('DISTINCT "templateId"'))
-      .where({ sessionId, industryId, deletedAt: null });
+    const seenBios = await this.query(txn).modify(
+      "biosForSessionAndIndustry",
+      sessionId,
+      industryId,
+    );
 
     return seenBios.map((seenBio) => seenBio.templateId);
+  }
+
+  static async getMostRecentTemplateIdForSessionAndIndustry(
+    sessionId: string,
+    industryId: string,
+    txn: Transaction,
+  ): Promise<string> {
+    const mostRecentBio = await this.query(txn)
+      .modify("biosForSessionAndIndustry", sessionId, industryId)
+      .first();
+
+    return mostRecentBio?.templateId;
   }
 }

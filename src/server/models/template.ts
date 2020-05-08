@@ -1,10 +1,12 @@
 import BaseModel from "./base-model";
+import Bio from "./bio";
 import { JSONSchema, Transaction, Modifiers, QueryBuilder } from "objection";
 import isEmpty from "lodash/isEmpty";
 
 interface IGetRandomByIndustryArgs {
   industryId: string;
   seenTemplateIds: string[];
+  sessionId: string;
 }
 
 export default class Template extends BaseModel {
@@ -42,26 +44,56 @@ export default class Template extends BaseModel {
   }
 
   static async getRandomByIndustryId(
-    { industryId, seenTemplateIds }: IGetRandomByIndustryArgs,
+    { industryId, seenTemplateIds, sessionId }: IGetRandomByIndustryArgs,
     txn: Transaction,
   ): Promise<Template> {
-    let randomTemplateFilteredBySeen = await this.query(txn)
-      .modify("randomByIndustryId", industryId)
-      .whereNotIn("templateId", seenTemplateIds)
-      .first();
+    let randomTemplate = await Template.getRandomTemplateFilteredBySeen(
+      industryId,
+      seenTemplateIds,
+      txn,
+    );
 
-    if (!randomTemplateFilteredBySeen && !isEmpty(seenTemplateIds)) {
-      randomTemplateFilteredBySeen = await this.query(txn)
-        .modify("randomByIndustryId", industryId)
-        .first();
+    if (!randomTemplate && !isEmpty(seenTemplateIds)) {
+      randomTemplate = await Template.getRandomTemplateDifferentFromLast(
+        industryId,
+        sessionId,
+        txn,
+      );
     }
 
-    if (!randomTemplateFilteredBySeen) {
+    if (!randomTemplate) {
       return Promise.reject(
         `No template exists in database for industryId: ${industryId}`,
       );
     }
 
-    return randomTemplateFilteredBySeen;
+    return randomTemplate;
+  }
+
+  static async getRandomTemplateFilteredBySeen(
+    industryId: string,
+    seenTemplateIds: string[],
+    txn: Transaction,
+  ) {
+    return this.query(txn)
+      .modify("randomByIndustryId", industryId)
+      .whereNotIn("templateId", seenTemplateIds)
+      .first();
+  }
+
+  static async getRandomTemplateDifferentFromLast(
+    industryId: string,
+    sessionId: string,
+    txn: Transaction,
+  ) {
+    const mostRecentTemplateIdForSessionAndIndustry = await Bio.getMostRecentTemplateIdForSessionAndIndustry(
+      sessionId,
+      industryId,
+      txn,
+    );
+    return this.query(txn)
+      .modify("randomByIndustryId", industryId)
+      .whereNot("templateId", mostRecentTemplateIdForSessionAndIndustry)
+      .first();
   }
 }
