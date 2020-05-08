@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import getBioQuery from "../graphql/queries/get-bio.graphql";
 import bioOptimizeMutation from "../graphql/mutations/bio-optimize.graphql";
@@ -18,10 +18,12 @@ import classnames from "classnames";
 import Button from "../button";
 import useCreateBio from "../custom-hooks/use-create-bio";
 import profileBannerImagePath from "../assets/banner.jpg";
+import { SessionContext } from "../session-context";
 
 const Bio = () => {
   const { bioId } = useParams();
   const history = useHistory();
+  const { sessionId } = useContext(SessionContext);
   const { data, loading, error } = useQuery<IBioData, IBioResolveVariables>(
     getBioQuery,
     {
