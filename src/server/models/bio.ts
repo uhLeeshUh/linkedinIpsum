@@ -4,11 +4,15 @@ import { JSONSchema, Transaction } from "objection";
 interface IBioCreateFields {
   name: string;
   industryId: string;
+  templateId: string;
+  sessionId: string;
 }
 
 export default class Bio extends BaseModel {
   name!: string;
   industryId!: string;
+  templateId!: string;
+  sessionId!: string;
 
   static tableName = "bio";
 
@@ -18,11 +22,13 @@ export default class Bio extends BaseModel {
       id: { type: "string", format: "uuid" },
       name: { type: "string", minLength: 1 },
       industryId: { type: "string", format: "uuid" },
+      templateId: { type: "string", format: "uuid" },
+      sessionId: { type: "string", format: "uuid" },
       updatedAt: { type: "string" },
       createdAt: { type: "string" },
       deletedAt: { type: "string" },
     },
-    required: ["name", "industryId"],
+    required: ["name", "industryId", "templateId", "sessionId"],
   };
 
   static async getById(bioId: string, txn: Transaction): Promise<Bio> {
