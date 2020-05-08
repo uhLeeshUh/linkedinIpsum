@@ -3,6 +3,7 @@ import { Transaction, transaction } from "objection";
 import Template from "../template";
 import Industry from "../industry";
 import IndustryTemplate from "../industry-template";
+import { v4 as uuid } from "uuid";
 
 describe("Template model", () => {
   let testDb: ReturnType<typeof setupTestDb>;
@@ -63,7 +64,10 @@ describe("Template model", () => {
     });
 
     it("gets a template for which there is a matching industry_template entry", async () => {
-      const result = await Template.getRandomByIndustryId(industry.id, txn);
+      const result = await Template.getRandomByIndustryId(
+        { industryId: industry.id, seenTemplateIds: [], sessionId: uuid() },
+        txn,
+      );
 
       expect([template0, template1, template2]).toContainEqual(
         expect.objectContaining(result),
