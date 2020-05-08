@@ -47,4 +47,16 @@ export default class Bio extends BaseModel {
   ): Promise<Bio> {
     return this.query(txn).insertAndFetch(variable);
   }
+
+  static async getTemplateIdsForSessionAndIndustry(
+    sessionId: string,
+    industryId: string,
+    txn: Transaction,
+  ): Promise<string[]> {
+    const seenBios = await this.query(txn)
+      .select(this.raw('DISTINCT "templateId"'))
+      .where({ sessionId, industryId, deletedAt: null });
+
+    return seenBios.map((seenBio) => seenBio.templateId);
+  }
 }

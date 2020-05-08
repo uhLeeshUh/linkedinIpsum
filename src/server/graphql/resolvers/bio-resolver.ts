@@ -50,8 +50,14 @@ export const bioCreate = async (
   return getDatabaseTransaction(testTransaction, async (txn) => {
     const { name, industryId, sessionId } = args.input;
 
-    const randomTemplateForBio = await Template.getRandomByIndustryId(
+    const seenTemplateIdsForSessionAndIndustry = await Bio.getTemplateIdsForSessionAndIndustry(
+      sessionId,
       industryId,
+      txn,
+    );
+
+    const randomTemplateForBio = await Template.getRandomByIndustryId(
+      { industryId, seenTemplateIds: seenTemplateIdsForSessionAndIndustry },
       txn,
     );
 
