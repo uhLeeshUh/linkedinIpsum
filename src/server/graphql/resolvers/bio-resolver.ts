@@ -48,12 +48,15 @@ export const bioCreate = async (
   { getDatabaseTransaction, testTransaction }: IGraphQLContext,
 ): Promise<IBio> => {
   return getDatabaseTransaction(testTransaction, async (txn) => {
-    const { name, industryId } = args.input;
-
-    const createdBio = await Bio.create({ name, industryId }, txn);
+    const { name, industryId, sessionId } = args.input;
 
     const randomTemplateForBio = await Template.getRandomByIndustryId(
       industryId,
+      txn,
+    );
+
+    const createdBio = await Bio.create(
+      { name, industryId, templateId: randomTemplateForBio.id, sessionId },
       txn,
     );
 
@@ -84,9 +87,14 @@ export const bioOptimize = async (
   return getDatabaseTransaction(testTransaction, async (txn) => {
     const { bioId } = args.input;
 
-    const previousBio = await Bio.getById(bioId, txn);
+    const { name, industryId, templateId } = await Bio.getById(bioId, txn);
     const optimizedBio = await Bio.create(
-      { name: previousBio.name, industryId: previousBio.industryId },
+      {
+        name,
+        industryId,
+        templateId,
+        sessionId: "803b6e96-fbd3-4102-bbea-2cfaf9419b35",
+      }, // AU update this to take real sessionId
       txn,
     );
 
