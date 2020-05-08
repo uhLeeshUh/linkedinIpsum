@@ -49,7 +49,7 @@ const Bio = () => {
     if (data) {
       try {
         const result = await optimizeBio({
-          variables: { bioId: data.bio.id },
+          variables: { bioId: data.bio.id, sessionId },
         });
 
         if (result.data) {

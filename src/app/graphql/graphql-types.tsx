@@ -19,6 +19,7 @@ export interface IBioCreateData {
 
 export interface IBioOptimizeVariables {
   bioId: string;
+  sessionId: string;
 }
 
 export interface IBioOptimizeData {

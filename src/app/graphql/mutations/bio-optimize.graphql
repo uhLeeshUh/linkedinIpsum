@@ -1,7 +1,7 @@
 #import "../fragments/full-bio.graphql"
 
-mutation bioOptimize($bioId: ID!) {
-  bioOptimize(input: { bioId: $bioId }) {
+mutation bioOptimize($bioId: ID!, $sessionId: ID!) {
+  bioOptimize(input: { bioId: $bioId, sessionId: $sessionId }) {
     ...FullBio
   }
 }

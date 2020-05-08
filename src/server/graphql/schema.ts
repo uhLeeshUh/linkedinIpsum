@@ -31,6 +31,7 @@ const typeDefs = gql`
 
   input BioOptimizeInput {
     bioId: ID!
+    sessionId: ID!
   }
 
   type BioChunk {

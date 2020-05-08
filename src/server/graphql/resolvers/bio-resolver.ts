@@ -85,7 +85,7 @@ export const bioOptimize = async (
   { getDatabaseTransaction, testTransaction }: IGraphQLContext,
 ): Promise<IBio> => {
   return getDatabaseTransaction(testTransaction, async (txn) => {
-    const { bioId } = args.input;
+    const { bioId, sessionId } = args.input;
 
     const { name, industryId, templateId } = await Bio.getById(bioId, txn);
     const optimizedBio = await Bio.create(
@@ -93,8 +93,8 @@ export const bioOptimize = async (
         name,
         industryId,
         templateId,
-        sessionId: "803b6e96-fbd3-4102-bbea-2cfaf9419b35",
-      }, // AU update this to take real sessionId
+        sessionId,
+      },
       txn,
     );
 
