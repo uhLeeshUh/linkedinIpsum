@@ -4,23 +4,18 @@ import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import noop from "lodash/noop";
 
-interface ICreateBioProps {
-  bio: IBioCreateVariables;
-}
-
-const useCreateBio = (props: ICreateBioProps | undefined) => {
+const useCreateBio = (props: IBioCreateVariables | undefined) => {
   const [createBio] = useMutation<IBioCreateData, IBioCreateVariables>(
     bioCreateMutation,
   );
   const history = useHistory();
 
   if (!props) return noop;
-  const { industryId, name } = props.bio;
 
   return async () => {
     try {
       const result = await createBio({
-        variables: { industryId, name },
+        variables: props,
       });
       if (result.data) {
         history.push(`/bio/${result.data.bioCreate.id}`);

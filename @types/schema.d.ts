@@ -24,6 +24,7 @@ declare module "schema" {
   export interface IBioCreateInput {
     industryId: string;
     name: string;
+    sessionId: string;
   }
 
   export interface IBioOptimizeInput {

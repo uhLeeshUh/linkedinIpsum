@@ -26,6 +26,7 @@ const typeDefs = gql`
   input BioCreateInput {
     industryId: ID!
     name: String!
+    sessionId: ID!
   }
 
   input BioOptimizeInput {

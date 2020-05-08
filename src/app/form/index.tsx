@@ -1,5 +1,5 @@
 import upperFirst from "lodash/upperFirst";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import getIndustriesQuery from "../graphql/queries/get-industries.graphql";
 import { IIndustry, IIndustriesData } from "../graphql/graphql-types";
@@ -7,14 +7,16 @@ import styles from "./css/form.css";
 import Button from "../button";
 import useCreateBio from "../custom-hooks/use-create-bio";
 import classnames from "classnames";
+import { SessionContext } from "../session-context";
 
 const Form = () => {
   const [name, setName] = useState("");
   const [industryId, setIndustryId] = useState("");
+  const { sessionId } = useContext(SessionContext);
   const { loading, error, data } = useQuery<IIndustriesData>(
     getIndustriesQuery,
   );
-  const onSubmit = useCreateBio({ bio: { name, industryId } });
+  const onSubmit = useCreateBio({ name, industryId, sessionId });
 
   if (loading) return null;
   if (error) {

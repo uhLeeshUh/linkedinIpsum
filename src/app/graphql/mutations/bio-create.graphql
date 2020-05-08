@@ -1,7 +1,9 @@
 #import "../fragments/full-bio.graphql"
 
-mutation bioCreate($industryId: ID!, $name: String!) {
-  bioCreate(input: { industryId: $industryId, name: $name }) {
+mutation bioCreate($industryId: ID!, $name: String!, $sessionId: ID!) {
+  bioCreate(
+    input: { industryId: $industryId, name: $name, sessionId: $sessionId }
+  ) {
     ...FullBio
   }
 }

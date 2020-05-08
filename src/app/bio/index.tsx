@@ -33,7 +33,11 @@ const Bio = () => {
   const [optimizeBio] = useMutation<IBioOptimizeData, IBioOptimizeVariables>(
     bioOptimizeMutation,
   );
-  const onClickCreateNewBio = useCreateBio(data);
+  const onClickCreateNewBio = useCreateBio(
+    data
+      ? { name: data.bio.name, industryId: data.bio.industryId, sessionId }
+      : undefined,
+  );
 
   if (loading && !data) return null;
   if (error) {

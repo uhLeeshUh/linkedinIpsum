@@ -10,6 +10,7 @@ export interface IIndustry {
 export interface IBioCreateVariables {
   name: string;
   industryId: string;
+  sessionId: string;
 }
 
 export interface IBioCreateData {
